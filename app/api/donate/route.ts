@@ -73,22 +73,53 @@ export async function POST(request: Request) {
   }
 }
 
-// POST: Verify payment (optional - for recording successful donations)
+// PUT: Verify payment signature before acknowledging
 export async function PUT(request: Request) {
   try {
     const body = await request.json()
     const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = body
 
-    // In production, verify the signature using crypto
-    // const crypto = require('crypto')
-    // const generated_signature = crypto
-    //   .createHmac('sha256', RAZORPAY_KEY_SECRET)
-    //   .update(razorpay_order_id + "|" + razorpay_payment_id)
-    //   .digest('hex')
-    // const isValid = generated_signature === razorpay_signature
+    if (!razorpay_order_id || !razorpay_payment_id || !razorpay_signature) {
+      return NextResponse.json(
+        { error: "Missing required payment verification fields" },
+        { status: 400 }
+      )
+    }
 
-    // For now, just acknowledge the payment
-    console.log("Payment received:", {
+    // Verify the Razorpay signature using Web Crypto API (Edge-compatible)
+    const message = `${razorpay_order_id}|${razorpay_payment_id}`
+    const encoder = new TextEncoder()
+
+    const key = await crypto.subtle.importKey(
+      "raw",
+      encoder.encode(RAZORPAY_KEY_SECRET),
+      { name: "HMAC", hash: "SHA-256" },
+      false,
+      ["sign"]
+    )
+
+    const signatureBuffer = await crypto.subtle.sign(
+      "HMAC",
+      key,
+      encoder.encode(message)
+    )
+
+    const generatedSignature = Array.from(new Uint8Array(signatureBuffer))
+      .map((b) => b.toString(16).padStart(2, "0"))
+      .join("")
+
+    if (generatedSignature !== razorpay_signature) {
+      console.error("Payment signature mismatch", {
+        orderId: razorpay_order_id,
+        paymentId: razorpay_payment_id,
+      })
+      return NextResponse.json(
+        { error: "Invalid payment signature" },
+        { status: 400 }
+      )
+    }
+
+    console.log("Payment verified successfully:", {
       orderId: razorpay_order_id,
       paymentId: razorpay_payment_id,
     })
