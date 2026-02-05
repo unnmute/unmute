@@ -1,4 +1,4 @@
-# Mental wellness app
+# Mental wellness app with RP
 
 *Automatically synced with your [v0.app](https://v0.app) deployments*
 
