@@ -27,8 +27,15 @@ export async function POST(request: Request) {
     // Convert amount to paise (Razorpay expects amount in smallest currency unit)
     const amountInPaise = Math.round(amount * 100)
 
-    // Create order using Razorpay API
-    const auth = btoa64(`${RAZORPAY_KEY_ID}:${RAZORPAY_KEY_SECRET}`)
+    if (!RAZORPAY_KEY_ID || !RAZORPAY_KEY_SECRET) {
+      return NextResponse.json(
+          { error: "Razorpay keys are missing" },
+          { status: 500 }
+      )
+    }
+
+    const auth = btoa(`${RAZORPAY_KEY_ID}:${RAZORPAY_KEY_SECRET}`)
+
     
     const orderResponse = await fetch("https://api.razorpay.com/v1/orders", {
       method: "POST",
@@ -48,17 +55,20 @@ export async function POST(request: Request) {
     })
 
     if (!orderResponse.ok) {
-      const errorData = await orderResponse.text()
-      console.error("Razorpay error:", errorData)
+      console.error("STATUS:", orderResponse.status)
+      console.error("HEADERS:", Object.fromEntries(orderResponse.headers))
+      const errorText = await orderResponse.text()
 
       return NextResponse.json(
           {
             error: "Razorpay order failed",
-            razorpay: errorData,
+            status: orderResponse.status,
+            body: errorText || null,
           },
           { status: orderResponse.status }
       )
     }
+
 
 
     const order = await orderResponse.json()
