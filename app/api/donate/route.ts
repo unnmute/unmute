@@ -36,23 +36,35 @@ export async function POST(request: Request) {
 
     const auth = btoa(`${RAZORPAY_KEY_ID}:${RAZORPAY_KEY_SECRET}`)
 
+    const payload = {
+      amount: Number(amountInPaise),
+      currency: "INR",
+      receipt: `receipt_${Date.now()}`,
+      notes: {
+        purpose: "UNMUTE Donation",
+      },
+    }
+
+    console.log("Razorpay payload:", payload)
+    console.log("Razorpay headers:", {
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+      "User-Agent": "PostmanRuntime/7.36.0",
+    })
+
     const orderResponse = await fetch("https://api.razorpay.com/v1/orders", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Accept": "application/json",   // ← THIS FIXES 406
-        Authorization: `Basic ${auth}`,
+        "Accept": "application/json",
+        "User-Agent": "PostmanRuntime/7.36.0", // 👈 mimic Postman
+        "Authorization": `Basic ${auth}`,
       },
-      body: JSON.stringify({
-        amount: Math.floor(Number(amountInPaise)), // ensure integer
-        currency,
-        receipt: `unmute_donation_${Date.now()}`,
-        notes: {
-          purpose: "UNMUTE Donation",
-          ...notes,
-        },
-      }),
+      body: JSON.stringify(payload),
     })
+
+
+
 
 
     if (!orderResponse.ok) {
