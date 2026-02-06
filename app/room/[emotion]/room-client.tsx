@@ -104,18 +104,6 @@ export function RoomClient({ emotion }: { emotion: string }) {
   
   // Audio room (LiveKit)
   const audioRoomName = room?.id ? `unmute-${room.id}` : "unmute-default"
-  // const {
-  //   isConnected: isAudioConnected,
-  //   isConnecting: isAudioConnecting,
-  //   isMuted: audioIsMuted,
-  //   audioEnabled,
-  //   error: audioError,
-  //   connect: connectAudio,
-  //   toggleMute: toggleAudioMute,
-  //   enableMic, 
-  //   participantAudioLevels
-  // } = useAudioRoom(audioRoomName, myAvatar.name)
-  
   const {
     isConnected: isAudioConnected,
     isConnecting: isAudioConnecting,
@@ -124,7 +112,6 @@ export function RoomClient({ emotion }: { emotion: string }) {
     error: audioError,
     connect: connectAudio,
     toggleMute: toggleAudioMute,
-    enableMic,
     participantAudioLevels,
   } = useAudioRoom(
     audioRoomName,
@@ -137,32 +124,20 @@ export function RoomClient({ emotion }: { emotion: string }) {
     setIsMuted(audioIsMuted)
   }, [audioIsMuted])
   
-  // // Handle mute toggle
-  // const handleToggleMute = useCallback(async () => {
-  //   if (typeof navigator !== "undefined" && navigator.mediaDevices?.getUserMedia) {
-  //     try {
-  //       await navigator.mediaDevices.getUserMedia({ audio: true })
-  //     } catch (error) {
-  //       console.warn("Microphone permission denied or unavailable:", error)
-  //       return
-  //     }
-  //   }
-  //   if (!isAudioConnected && !isAudioConnecting) {
-  //     await enableMic()        // 🔧 FIX: permission handled in hook
-  //     await connectAudio()
-  //   }
-  //   toggleAudioMute()
-  //   setIsMuted(prev => !prev)
-  // }, [enableMic,connectAudio, toggleAudioMute, isAudioConnected, isAudioConnecting])
+  // Handle mute toggle - connect first if needed, then toggle via LiveKit API
   const handleToggleMute = useCallback(async () => {
     if (!isAudioConnected && !isAudioConnecting) {
-      await enableMic()      // permission handled inside hook
-      await connectAudio()   // start LiveKit connection
-      return                // 🔑 STOP here, wait for connection
+      // First click: connect to LiveKit room (mic starts muted)
+      await connectAudio()
+      return
     }
+    if (isAudioConnecting) {
+      // Still connecting, ignore clicks
+      return
+    }
+    // Connected: toggle mic via LiveKit's setMicrophoneEnabled
     toggleAudioMute()
-    setIsMuted(prev => !prev)
-}, [enableMic,connectAudio,toggleAudioMute,isAudioConnected,isAudioConnecting,])
+  }, [connectAudio, toggleAudioMute, isAudioConnected, isAudioConnecting])
 
 
   const config = emotionConfig[safeEmotion] || emotionConfig.anxious
