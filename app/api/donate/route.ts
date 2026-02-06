@@ -36,15 +36,15 @@ export async function POST(request: Request) {
 
     const auth = btoa(`${RAZORPAY_KEY_ID}:${RAZORPAY_KEY_SECRET}`)
 
-    
     const orderResponse = await fetch("https://api.razorpay.com/v1/orders", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "Accept": "application/json",   // ← THIS FIXES 406
         Authorization: `Basic ${auth}`,
       },
       body: JSON.stringify({
-        amount: amountInPaise,
+        amount: Math.floor(Number(amountInPaise)), // ensure integer
         currency,
         receipt: `unmute_donation_${Date.now()}`,
         notes: {
@@ -53,6 +53,7 @@ export async function POST(request: Request) {
         },
       }),
     })
+
 
     if (!orderResponse.ok) {
       console.error("STATUS:", orderResponse.status)
