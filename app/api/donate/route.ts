@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server"
 
-export const runtime = "edge"
+export const runtime = "nodejs"
+
 
 // Razorpay API credentials - Replace with your actual keys
 const RAZORPAY_KEY_ID = process.env.RAZORPAY_KEY_ID || "YOUR_RAZORPAY_KEY_ID"
