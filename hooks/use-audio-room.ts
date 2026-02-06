@@ -1,6 +1,13 @@
 "use client"
 
 import { useState, useEffect, useCallback, useRef } from "react"
+import type {
+  Room,
+  RemoteParticipant,
+  RemoteTrack,
+  RemoteTrackPublication,
+  LocalTrackPublication,
+} from "livekit-client"
 
 interface AudioRoomState {
   isConnected: boolean
@@ -14,13 +21,26 @@ interface AudioRoomState {
 interface UseAudioRoomReturn extends AudioRoomState {
   connect: () => Promise<void>
   disconnect: () => void
-  toggleMute: () => void
-  setMuted: (muted: boolean) => void
+  toggleMute: () => Promise<void>
+  setMuted: (muted: boolean) => Promise<void>
+}
+
+// 🔓 Browser audio unlock helper
+async function unlockAudioContext() {
+  const AudioContext =
+      window.AudioContext || (window as any).webkitAudioContext
+
+  if (!AudioContext) return
+
+  const context = new AudioContext()
+  if (context.state === "suspended") {
+    await context.resume()
+  }
 }
 
 export function useAudioRoom(
-  roomName: string,
-  participantName: string
+    roomName: string,
+    participantName: string
 ): UseAudioRoomReturn {
   const [state, setState] = useState<AudioRoomState>({
     isConnected: false,
@@ -31,18 +51,17 @@ export function useAudioRoom(
     participantAudioLevels: new Map(),
   })
 
-  const roomRef = useRef<any>(null)
+  const roomRef = useRef<Room | null>(null)
   const connectingRef = useRef(false)
 
   const connect = useCallback(async () => {
-    // Prevent double-connect race condition
     if (connectingRef.current || roomRef.current) return
     connectingRef.current = true
 
     setState((prev) => ({ ...prev, isConnecting: true, error: null }))
 
     try {
-      // Get LiveKit token from our API
+      // 🔑 Fetch token
       const response = await fetch("/api/livekit/token", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -50,25 +69,19 @@ export function useAudioRoom(
       })
 
       const data = await response.json()
-
-      // If LiveKit is not configured, gracefully degrade
-      if (!data.audioEnabled) {
-        setState((prev) => ({
-          ...prev,
-          isConnecting: false,
-          audioEnabled: false,
-          error: data.message || "Audio not available",
-        }))
-        connectingRef.current = false
-        return
+      if (!data?.audioEnabled) {
+        throw new Error(data?.message || "Audio not enabled")
       }
 
-      // Dynamic import LiveKit client
+      // 🔓 MUST be triggered by user click
+      await unlockAudioContext()
+
       const { Room, RoomEvent, Track } = await import("livekit-client")
 
       const room = new Room({
         adaptiveStream: true,
         dynacast: true,
+        autoSubscribe: true,
         audioCaptureDefaults: {
           echoCancellation: true,
           noiseSuppression: true,
@@ -76,7 +89,7 @@ export function useAudioRoom(
         },
       })
 
-      // Set up event listeners BEFORE connecting
+      // ✅ Connected
       room.on(RoomEvent.Connected, () => {
         setState((prev) => ({
           ...prev,
@@ -98,51 +111,66 @@ export function useAudioRoom(
         }))
       })
 
-      room.on(RoomEvent.TrackSubscribed, (track, publication, participant) => {
-        if (track.kind === Track.Kind.Audio) {
-          const audioElement = track.attach()
-          document.body.appendChild(audioElement)
-        }
-      })
+      // 🔊 Attach remote audio
+      room.on(
+          RoomEvent.TrackSubscribed,
+          (
+              track: RemoteTrack,
+              _pub: RemoteTrackPublication,
+              _participant: RemoteParticipant
+          ) => {
+            if (track.kind === Track.Kind.Audio) {
+              const el = track.attach()
+              el.autoplay = true
+              el.muted = false
+              el.playsInline = true
+              document.body.appendChild(el)
+            }
+          }
+      )
 
-      room.on(RoomEvent.TrackUnsubscribed, (track) => {
+      room.on(RoomEvent.TrackUnsubscribed, (track: RemoteTrack) => {
         track.detach().forEach((el) => el.remove())
       })
 
       room.on(RoomEvent.ActiveSpeakersChanged, (speakers) => {
         const levels = new Map<string, number>()
-        speakers.forEach((speaker) => {
-          levels.set(speaker.identity, speaker.audioLevel || 0)
-        })
-        setState((prev) => ({ ...prev, participantAudioLevels: levels }))
+        speakers.forEach((s) =>
+            levels.set(s.identity, s.audioLevel ?? 0)
+        )
+        setState((prev) => ({
+          ...prev,
+          participantAudioLevels: levels,
+        }))
       })
 
-      // Handle local track mute/unmute events to keep state in sync
-      room.on(RoomEvent.LocalTrackPublished, () => {
-        setState((prev) => ({ ...prev, isMuted: false }))
-      })
+      room.on(
+          RoomEvent.LocalTrackPublished,
+          (_pub: LocalTrackPublication) => {
+            setState((prev) => ({ ...prev, isMuted: false }))
+          }
+      )
 
-      room.on(RoomEvent.TrackMuted, (publication, participant) => {
-        if (participant.isLocal && publication.source === Track.Source.Microphone) {
+      room.on(RoomEvent.TrackMuted, (pub, participant) => {
+        if (participant.isLocal && pub.source === Track.Source.Microphone) {
           setState((prev) => ({ ...prev, isMuted: true }))
         }
       })
 
-      room.on(RoomEvent.TrackUnmuted, (publication, participant) => {
-        if (participant.isLocal && publication.source === Track.Source.Microphone) {
+      room.on(RoomEvent.TrackUnmuted, (pub, participant) => {
+        if (participant.isLocal && pub.source === Track.Source.Microphone) {
           setState((prev) => ({ ...prev, isMuted: false }))
         }
       })
 
-      // Connect to room
       await room.connect(data.wsUrl, data.token)
       roomRef.current = room
 
-      // Start with microphone muted (use LiveKit's built-in mic management)
+      // Start muted
       await room.localParticipant.setMicrophoneEnabled(false)
       connectingRef.current = false
-    } catch (error) {
-      console.error("Failed to connect to audio room:", error)
+    } catch (err) {
+      console.error("LiveKit connect failed:", err)
       connectingRef.current = false
       setState((prev) => ({
         ...prev,
@@ -153,10 +181,8 @@ export function useAudioRoom(
   }, [roomName, participantName])
 
   const disconnect = useCallback(() => {
-    if (roomRef.current) {
-      roomRef.current.disconnect()
-      roomRef.current = null
-    }
+    roomRef.current?.disconnect()
+    roomRef.current = null
     connectingRef.current = false
     setState((prev) => ({
       ...prev,
@@ -167,39 +193,20 @@ export function useAudioRoom(
     }))
   }, [])
 
-  // Use LiveKit's setMicrophoneEnabled for proper audio track management
   const toggleMute = useCallback(async () => {
     if (!roomRef.current) return
-
-    const newMuted = !state.isMuted
-
-    try {
-      // LiveKit handles getUserMedia, track publishing, echo cancellation, etc.
-      await roomRef.current.localParticipant.setMicrophoneEnabled(!newMuted)
-      setState((prev) => ({ ...prev, isMuted: newMuted }))
-    } catch (error) {
-      console.error("Failed to toggle mute:", error)
-      setState((prev) => ({ ...prev, error: "Microphone permission denied or unavailable" }))
-    }
+    const nextMuted = !state.isMuted
+    await roomRef.current.localParticipant.setMicrophoneEnabled(!nextMuted)
+    setState((prev) => ({ ...prev, isMuted: nextMuted }))
   }, [state.isMuted])
 
   const setMuted = useCallback(async (muted: boolean) => {
     if (!roomRef.current) return
-
-    try {
-      await roomRef.current.localParticipant.setMicrophoneEnabled(!muted)
-      setState((prev) => ({ ...prev, isMuted: muted }))
-    } catch (error) {
-      console.error("Failed to set mute:", error)
-    }
+    await roomRef.current.localParticipant.setMicrophoneEnabled(!muted)
+    setState((prev) => ({ ...prev, isMuted: muted }))
   }, [])
 
-  // Clean up on unmount
-  useEffect(() => {
-    return () => {
-      disconnect()
-    }
-  }, [disconnect])
+  useEffect(() => () => disconnect(), [disconnect])
 
   return {
     ...state,
@@ -209,4 +216,3 @@ export function useAudioRoom(
     setMuted,
   }
 }
-
