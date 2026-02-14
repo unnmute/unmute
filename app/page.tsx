@@ -6,6 +6,7 @@ import { motion } from "framer-motion"
 import { useState, useEffect } from "react"
 import { createClient } from "@/lib/supabase/client"
 import { Mail, LogOut, User } from "lucide-react"
+import Image from "next/image"
 import type { User as SupabaseUser } from "@supabase/supabase-js"
 
 export default function HomePage() {
@@ -81,7 +82,14 @@ export default function HomePage() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <span className="text-xl font-semibold tracking-tight text-foreground">
+            <span className="flex items-center gap-2 text-xl font-semibold tracking-tight text-foreground">
+              <Image
+                src="/unmute-icon.jpeg"
+                alt="UNMUTE logo"
+                width={32}
+                height={32}
+                className="rounded-md"
+              />
               UNMUTE
             </span>
           </motion.div>
