@@ -1,5 +1,5 @@
 import { createClient } from "@/lib/supabase/server"
-import { isValidRoomId } from "@/lib/room-config"
+import { getRoomConfig, isValidRoomId } from "@/lib/room-config"
 import { NextResponse } from "next/server"
 
 // Force edge runtime for Cloudflare compatibility
@@ -16,6 +16,7 @@ export async function GET(request: Request) {
         { status: 400 }
     )
   }
+  const roomConfig = getRoomConfig(emotion)
 
   const supabase = await createClient()
 
@@ -25,7 +26,7 @@ export async function GET(request: Request) {
       .select("*")
       .eq("emotion", emotion)
       .eq("is_active", true)
-      .lt("participant_count", 10)
+      .lt("participant_count", roomConfig.maxParticipants)
       .gt("expires_at", new Date().toISOString())
       .order("created_at", { ascending: false })
       .limit(1)
@@ -67,25 +68,56 @@ export async function POST(request: Request) {
   const supabase = await createClient()
 
   if (action === "join") {
-    // Get current room and increment participant count
-    const { data: currentRoom } = await supabase
-        .from("rooms")
-        .select("participant_count")
-        .eq("id", roomId)
-        .single()
-
-    if (currentRoom) {
-      const { error: updateError } = await supabase
+    // Optimistic-lock retry loop to enforce maxParticipants under concurrent joins.
+    for (let attempt = 0; attempt < 3; attempt++) {
+      const { data: currentRoom, error: roomError } = await supabase
           .from("rooms")
-          .update({ participant_count: (currentRoom.participant_count || 0) + 1 })
+          .select("id, emotion, participant_count, is_active, expires_at")
           .eq("id", roomId)
+          .single()
+
+      if (roomError || !currentRoom) {
+        return NextResponse.json({ error: "Room not found" }, { status: 404 })
+      }
+
+      if (!currentRoom.is_active || new Date(currentRoom.expires_at) <= new Date()) {
+        return NextResponse.json(
+            { error: "Room is no longer active. Please try again." },
+            { status: 409 },
+        )
+      }
+
+      const roomConfig = getRoomConfig(currentRoom.emotion)
+      const currentCount = currentRoom.participant_count || 0
+      if (currentCount >= (roomConfig.maxParticipants ?? 10)) {
+        return NextResponse.json(
+            { error: `Room is full (${roomConfig.maxParticipants ?? 10} max).` },
+            { status: 409 },
+        )
+      }
+
+
+      const { data: updatedRoom, error: updateError } = await supabase
+          .from("rooms")
+          .update({ participant_count: currentCount + 1 })
+          .eq("id", roomId)
+          .eq("participant_count", currentCount)
+          .select("id")
+          .maybeSingle()
 
       if (updateError) {
         return NextResponse.json({ error: updateError.message }, { status: 500 })
       }
+
+      if (updatedRoom) {
+        return NextResponse.json({ success: true })
+      }
     }
 
-    return NextResponse.json({ success: true })
+    return NextResponse.json(
+        { error: "Room is full. Please try joining again." },
+        { status: 409 },
+    )
   }
 
   if (action === "leave") {

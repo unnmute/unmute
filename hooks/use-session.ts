@@ -62,14 +62,18 @@ export function useSession(emotion: string) {
         throw new Error(roomData.error || "Failed to find room")
       }
 
-      setRoom(roomData.room)
-
       // Step 2: Join the room
-      await fetch("/api/rooms", {
+      const joinResponse = await fetch("/api/rooms", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ roomId: roomData.room.id, action: "join" }),
       })
+      const joinData = await joinResponse.json()
+      if (!joinResponse.ok) {
+        throw new Error(joinData.error || "Failed to join room")
+      }
+
+      setRoom(roomData.room)
 
       // Step 3: Create a session
       const sessionResponse = await fetch("/api/sessions", {
@@ -142,9 +146,9 @@ export function useSession(emotion: string) {
 
   // Save reflection
   const saveReflection = useCallback(async (
-    feelingBefore: number,
-    feelingAfter: number,
-    gratitudeNote?: string
+      feelingBefore: number,
+      feelingAfter: number,
+      gratitudeNote?: string
   ) => {
     if (!session) return
 
