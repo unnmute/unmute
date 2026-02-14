@@ -61,6 +61,21 @@ function ReflectionContent() {
         }
       }
     }
+    if (sessionId) {
+      try {
+        await fetch("/api/feedback", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            sessionId,
+            feeling: feedback,
+            message: feedbackNote.trim() || null,
+          }),
+        })
+      } catch (error) {
+        console.error("Failed to save feedback:", error)
+      }
+    }
     
     setTimeout(() => setShowThankYou(true), 500)
   }
@@ -84,7 +99,7 @@ function ReflectionContent() {
       const response = await fetch("/api/donate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ amount }),
+        body: JSON.stringify({ amount, sessionId }),
       })
 
       if (!response.ok) {

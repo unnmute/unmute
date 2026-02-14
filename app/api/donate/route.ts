@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server"
-
+import { createClient } from "@/lib/supabase/server"
 export const runtime = "nodejs"
 
 
@@ -87,6 +87,30 @@ export async function POST(request: Request) {
 
     const order = await orderResponse.json()
 
+    // Save the initial donation record with status 'created'
+    const supabase = await createClient()
+
+    // Upsert donor by email (if provided)
+    let donorId = null
+    if (body.email) {
+      const { data: donor } = await supabase
+          .from("donors")
+          .upsert({ email: body.email }, { onConflict: "email" })
+          .select("id")
+          .single()
+      donorId = donor?.id || null
+    }
+
+    // Insert donation record
+    await supabase.from("donations").insert({
+      donor_id: donorId,
+      session_id: body.sessionId || null,
+      amount: amountInPaise,
+      currency: "INR",
+      razorpay_order_id: order.id,
+      status: "created",
+    })
+
     return NextResponse.json({
       orderId: order.id,
       amount: order.amount,
@@ -152,6 +176,17 @@ export async function PUT(request: Request) {
       orderId: razorpay_order_id,
       paymentId: razorpay_payment_id,
     })
+
+    // Update donation record to 'paid'
+    const supabase = await createClient()
+    await supabase
+        .from("donations")
+        .update({
+          razorpay_payment_id,
+          status: "paid",
+          paid_at: new Date().toISOString(),
+        })
+        .eq("razorpay_order_id", razorpay_order_id)
 
     return NextResponse.json({ success: true })
   } catch (error) {
