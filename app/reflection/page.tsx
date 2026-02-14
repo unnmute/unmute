@@ -228,70 +228,70 @@ function ReflectionContent() {
                       })}
                     </motion.div>
 
-                    {/* Feedback Note */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.8 }}
-                        className="w-full mt-6"
-                    >
-                      <label htmlFor="feedback-note" className="block text-sm font-semibold text-white mb-2">
-                        Anything you would like to share? (optional)
-                      </label>
-                      <textarea
-                          id="feedback-note"
-                          value={feedbackNote}
-                          onChange={(e) => setFeedbackNote(e.target.value)}
-                          placeholder="Your thoughts, suggestions, or how we can improve..."
-                          rows={3}
-                          className="w-full px-4 py-3 rounded-xl bg-card/50 border border-border text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-foreground/20 focus:border-muted-foreground/50 resize-none transition-all"
-                      />
-                      <button
-                          type="button"
-                          onClick={() => handleFeedback(selectedFeedback || "skip")}
-                          className="mt-4 w-full flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-foreground text-background font-medium transition-all hover:opacity-90"
-                          aria-label="Submit your reflection"
-                      >
-                        Submit
-                      </button>
-                    </motion.div>
-                  </motion.div>
-              ) : (
-                  <motion.div
-                      key="thank-you"
-                      initial={{ opacity: 0, scale: 0.95 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      className="flex flex-col items-center text-center max-w-md"
-                  >
-                    {/* Checkmark Animation */}
-                    <motion.div
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        transition={{ type: "spring", delay: 0.2 }}
-                        className="w-20 h-20 rounded-full bg-card border border-border flex items-center justify-center mb-8"
-                    >
-                      <motion.svg
-                          width="32"
-                          height="32"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          className="text-foreground"
-                          initial={{ pathLength: 0 }}
-                          animate={{ pathLength: 1 }}
-                          transition={{ delay: 0.4, duration: 0.5 }}
-                      >
-                        <motion.path
-                            d="M20 6L9 17l-5-5"
-                            initial={{ pathLength: 0 }}
-                            animate={{ pathLength: 1 }}
-                            transition={{ delay: 0.4, duration: 0.5 }}
-                        />
-                      </motion.svg>
-                    </motion.div>
+              {/* Feedback Note */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.8 }}
+                className="w-full mt-6"
+              >
+                <label htmlFor="feedback-note" className="block text-sm font-semibold text-white mb-2">
+                  Anything you would like to share? (optional)
+                </label>
+                <textarea
+                  id="feedback-note"
+                  value={feedbackNote}
+                  onChange={(e) => setFeedbackNote(e.target.value)}
+                  placeholder="Your thoughts, suggestions, or how we can improve..."
+                  rows={3}
+                  className="w-full px-4 py-3 rounded-xl bg-card/50 border border-border text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-foreground/20 focus:border-muted-foreground/50 resize-none transition-all"
+                />
+                <button
+                  type="button"
+                  onClick={() => handleFeedback(selectedFeedback || "skip")}
+                  className="mt-4 w-full flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-foreground text-background font-medium transition-all hover:opacity-90"
+                  aria-label="Submit your reflection"
+                >
+                  Submit
+                </button>
+              </motion.div>
+            </motion.div>
+          ) : (
+            <motion.div
+              key="thank-you"
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="flex flex-col items-center text-center max-w-md"
+            >
+              {/* Checkmark Animation */}
+              <motion.div
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ type: "spring", delay: 0.2 }}
+                className="w-20 h-20 rounded-full bg-card border border-border flex items-center justify-center mb-8"
+              >
+                <motion.svg
+                  width="32"
+                  height="32"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="text-foreground"
+                  initial={{ pathLength: 0 }}
+                  animate={{ pathLength: 1 }}
+                  transition={{ delay: 0.4, duration: 0.5 }}
+                >
+                  <motion.path
+                    d="M20 6L9 17l-5-5"
+                    initial={{ pathLength: 0 }}
+                    animate={{ pathLength: 1 }}
+                    transition={{ delay: 0.4, duration: 0.5 }}
+                  />
+                </motion.svg>
+              </motion.div>
 
                     <motion.h2
                         initial={{ opacity: 0, y: 10 }}
