@@ -36,19 +36,19 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       {
-        url: '/unmute-symbol.png',
+        url: '/unmute-icon.jpe',
         media: '(prefers-color-scheme: light)',
       },
       {
-        url: '/unmute-symbol.png',
+        url: '/unmute-icon.jpe',
         media: '(prefers-color-scheme: dark)',
       },
       {
-        url: '/unmute-symbol.png',
-        type: 'image/png',
+        url: '/icon.svg',
+        type: 'image/svg+xml',
       },
     ],
-    apple: '/unmute-symbol.png',
+    apple: '/unmute-icon.jpeg',
   },
 }
 
@@ -59,16 +59,16 @@ export const viewport: Viewport = {
 }
 
 export default function RootLayout({
-  children,
-}: Readonly<{
+                                     children,
+                                   }: Readonly<{
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
+      <html lang="en">
       <body className={`font-sans antialiased min-h-screen bg-background text-foreground`}>
-        {children}
-        <Analytics />
+      {children}
+      <Analytics />
       </body>
-    </html>
+      </html>
   )
 }
