@@ -11,6 +11,7 @@ import { SilentReactionsSimple } from "@/components/SilentReactionsSimple"
 import { CountdownTimer } from "@/components/countdown-timer"
 import { RoomConnectionLoader } from "@/components/room-connection-loader"
 import { TermsAndConditionsGate } from "@/components/terms-and-conditions-gate"
+import { AnonymousLimitGate } from "@/components/anonymous-limit-gate"
 import { createClient } from "@/lib/supabase/client"
 
 const emotionConfig: Record<string, { label: string; color: string; bgGradient: string }> = {
@@ -188,6 +189,18 @@ export function RoomClient({ emotion }: { emotion: string }) {
   const handleTermsCancel = useCallback(() => {
     router.push("/")
   }, [router])
+
+  // Anonymous limit gate state
+  const [anonymousAllowed, setAnonymousAllowed] = useState(false)
+  const [anonymousBlocked, setAnonymousBlocked] = useState(false)
+
+  const handleAnonymousAllowed = useCallback(() => {
+    setAnonymousAllowed(true)
+  }, [])
+
+  const handleAnonymousBlocked = useCallback(() => {
+    setAnonymousBlocked(true)
+  }, [])
   
   useEffect(() => {
     setMounted(true)
@@ -231,6 +244,13 @@ export function RoomClient({ emotion }: { emotion: string }) {
             onCancel={handleTermsCancel}
           />
         )}
+
+        {/* Anonymous join limit gate — checks fingerprint for unauthenticated users */}
+        <AnonymousLimitGate
+          isAuthenticated={isAuthenticated}
+          onAllowed={handleAnonymousAllowed}
+          onBlocked={handleAnonymousBlocked}
+        />
 
         {/* Immersive connection loader overlay */}
         <RoomConnectionLoader
