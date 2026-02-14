@@ -347,9 +347,15 @@ export function RoomClient({ emotion }: { emotion: string }) {
               }
             `}>
               <span className={`w-2 h-2 rounded-full ${isRealtimeConnected ? "bg-emerald-500" : "bg-amber-500"} animate-pulse`} />
-              {isRealtimeConnected 
-                ? `${participantCount} ${participantCount === 1 ? "soul" : "souls"} present`
-                : "Joining sanctuary..."
+              {!isRealtimeConnected
+                  ? "Joining sanctuary..."
+                  : participantCount <= 1
+                      ? "You're the first here. Others may join soon."
+                      : (
+                          <span key={participantCount} className="animate-in fade-in duration-300">
+                      {participantCount} people sharing this space
+                    </span>
+                      )
               }
             </div>
           </div>
