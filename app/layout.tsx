@@ -36,11 +36,11 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       {
-        url: '/unmute-icon.jpe',
+        url: '/unmute-icon.jpeg',
         media: '(prefers-color-scheme: light)',
       },
       {
-        url: '/unmute-icon.jpe',
+        url: '/unmute-icon.jpeg',
         media: '(prefers-color-scheme: dark)',
       },
       {
