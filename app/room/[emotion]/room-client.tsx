@@ -10,6 +10,8 @@ import { usePersistentTimer } from "@/hooks/use-persistent-timer"
 import { SilentReactionsSimple } from "@/components/SilentReactionsSimple"
 import { CountdownTimer } from "@/components/countdown-timer"
 import { RoomConnectionLoader } from "@/components/room-connection-loader"
+import { TermsAndConditionsGate } from "@/components/terms-and-conditions-gate"
+import { createClient } from "@/lib/supabase/client"
 
 const emotionConfig: Record<string, { label: string; color: string; bgGradient: string }> = {
   anxious: {
@@ -142,6 +144,50 @@ export function RoomClient({ emotion }: { emotion: string }) {
 
   const config = emotionConfig[safeEmotion] || emotionConfig.anxious
   const color = emotionColors[safeEmotion] || emotionColors.anxious
+
+  // Terms and Conditions gate state
+  const [termsAccepted, setTermsAccepted] = useState(false)
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [hasAcceptedTermsDB, setHasAcceptedTermsDB] = useState(false)
+  const [termsLoading, setTermsLoading] = useState(true)
+
+  useEffect(() => {
+    const checkTermsStatus = async () => {
+      try {
+        const supabase = createClient()
+        const { data: { user } } = await supabase.auth.getUser()
+
+        if (user) {
+          setIsAuthenticated(true)
+          // Check if the user has already accepted terms in the database
+          const response = await fetch("/api/terms")
+          const data = await response.json()
+          if (data.hasAcceptedTerms) {
+            setHasAcceptedTermsDB(true)
+            setTermsAccepted(true)
+          }
+        } else {
+          setIsAuthenticated(false)
+        }
+      } catch {
+        // If check fails, default to showing the gate
+      } finally {
+        setTermsLoading(false)
+      }
+    }
+    checkTermsStatus()
+  }, [])
+
+  const handleTermsAccept = useCallback(() => {
+    setTermsAccepted(true)
+    if (isAuthenticated) {
+      setHasAcceptedTermsDB(true)
+    }
+  }, [isAuthenticated])
+
+  const handleTermsCancel = useCallback(() => {
+    router.push("/")
+  }, [router])
   
   useEffect(() => {
     setMounted(true)
@@ -176,6 +222,16 @@ export function RoomClient({ emotion }: { emotion: string }) {
 
   return (
       <>
+        {/* Terms and Conditions Gate */}
+        {!termsLoading && !termsAccepted && (
+          <TermsAndConditionsGate
+            isAuthenticated={isAuthenticated}
+            hasAcceptedTerms={hasAcceptedTermsDB}
+            onAccept={handleTermsAccept}
+            onCancel={handleTermsCancel}
+          />
+        )}
+
         {/* Immersive connection loader overlay */}
         <RoomConnectionLoader
             emotion={safeEmotion}
