@@ -7,7 +7,7 @@ import { Brain, Heart, Flame, MessageCircle } from "lucide-react"
 const emotions = [
   {
     id: "anxious",
-    label: "ANXIOUS",
+    label: "brain won’t chill",
     description: "Racing thoughts, worry, unease",
     icon: Brain,
     gradient: "from-purple-600/20 via-purple-500/10 to-transparent",
