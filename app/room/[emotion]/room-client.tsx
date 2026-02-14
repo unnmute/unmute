@@ -9,6 +9,7 @@ import { useAudioRoom } from "@/hooks/use-audio-room"
 import { usePersistentTimer } from "@/hooks/use-persistent-timer"
 import { SilentReactionsSimple } from "@/components/SilentReactionsSimple"
 import { CountdownTimer } from "@/components/countdown-timer"
+import { RoomConnectionLoader } from "@/components/room-connection-loader"
 
 const emotionConfig: Record<string, { label: string; color: string; bgGradient: string }> = {
   anxious: {
@@ -69,8 +70,7 @@ export function RoomClient({ emotion }: { emotion: string }) {
 
   
   // Backend session management
-  const { room, session, isLoading, leaveRoom, sendReaction } = useSession(safeEmotion)
-  
+  const { room, session, isLoading, error, leaveRoom, sendReaction, joinRoom } = useSession(safeEmotion)
   // Realtime presence and reactions
   const { 
     participants, 
@@ -168,23 +168,24 @@ export function RoomClient({ emotion }: { emotion: string }) {
   //     </main>
   //   )
   // }
-  
-  if (!mounted || !anonymousUserId) {
-    return (
-      <main className="min-h-screen bg-background flex items-center justify-center">
-        <div className="text-center space-y-4">
-          <div className="w-16 h-16 mx-auto rounded-full bg-gradient-to-br from-muted/50 to-muted/20 animate-pulse" />
-          <div className="text-muted-foreground">
-            Preparing your sanctuary...
-          </div>
-        </div>
-      </main>
-    )
-  }
+
+  // Determine connection loader visibility
+  const isRoomConnecting = !mounted || !anonymousUserId || isLoading
+  const hasConnectionError = !!error
 
 
   return (
-    <main className="min-h-screen bg-background relative overflow-hidden">
+      <>
+        {/* Immersive connection loader overlay */}
+        <RoomConnectionLoader
+            emotion={safeEmotion}
+            isConnecting={isRoomConnecting}
+            hasError={hasConnectionError}
+            errorMessage={error || undefined}
+            onRetry={() => joinRoom()}
+        />
+
+        <main className="min-h-screen bg-background relative overflow-hidden">
       {/* Ambient Background */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         {/* Main gradient */}
@@ -280,6 +281,7 @@ export function RoomClient({ emotion }: { emotion: string }) {
         {/* Participant Avatars + Mic Controls */}
         <div className="mb-8 animate-in fade-in slide-in-from-bottom-4 duration-500 delay-500">
           {/* Connection status badge */}
+          {/* Live member count */}
           <div className="flex justify-start mb-6 w-full max-w-md mx-auto">
             <div className={`
               inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs
@@ -447,5 +449,6 @@ export function RoomClient({ emotion }: { emotion: string }) {
         }
       `}</style>
     </main>
+      </>
   )
 }
