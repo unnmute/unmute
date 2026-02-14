@@ -102,14 +102,14 @@ export function AnonymousLimitGate({
 
   if (status === "loading") {
     return (
-      <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-[#0f0f0f]">
+      <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-background">
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           className="flex flex-col items-center gap-4"
         >
-          <div className="h-8 w-8 animate-spin rounded-full border-2 border-white/20 border-t-white/80" />
-          <p className="text-sm text-white/50">Checking access...</p>
+          <div className="h-8 w-8 animate-spin rounded-full border-2 border-muted-foreground/20 border-t-foreground/80" />
+          <p className="text-sm text-muted-foreground">Checking access...</p>
         </motion.div>
       </div>
     )
@@ -155,23 +155,23 @@ export function AnonymousLimitGate({
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 z-[9999] flex items-center justify-center bg-[#0f0f0f]/95 backdrop-blur-md"
+        className="fixed inset-0 z-[9999] flex items-center justify-center bg-background/95 backdrop-blur-md"
       >
         <motion.div
           initial={{ opacity: 0, scale: 0.9, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           transition={{ delay: 0.1, duration: 0.4, ease: "easeOut" }}
-          className="mx-4 flex max-w-md flex-col items-center gap-6 rounded-2xl border border-white/10 bg-[#1a1a1a] p-8 text-center shadow-2xl"
+          className="mx-4 flex max-w-md flex-col items-center gap-6 rounded-2xl border border-border bg-card p-8 text-center shadow-2xl"
         >
           <div className="flex h-16 w-16 items-center justify-center rounded-full bg-red-500/10">
             <AlertTriangle className="h-8 w-8 text-red-400" />
           </div>
 
           <div className="space-y-2">
-            <h2 className="text-2xl font-bold text-white">
+            <h2 className="text-2xl font-bold text-foreground">
               Free Sessions Used
             </h2>
-            <p className="text-white/60 leading-relaxed">
+            <p className="text-muted-foreground leading-relaxed">
               You{"'"}ve used all 3 free anonymous sessions. Create a free
               account to continue joining rooms with no limits.
             </p>
@@ -185,7 +185,7 @@ export function AnonymousLimitGate({
                   window.location.href = result.url
                 }
               }}
-              className="flex items-center justify-center gap-3 rounded-xl border border-white/10 bg-white px-6 py-3 text-sm font-semibold text-[#1a1a1a] transition-all hover:bg-white/90 hover:shadow-lg hover:shadow-white/10"
+              className="flex items-center justify-center gap-3 rounded-xl border border-border bg-background px-6 py-3 text-sm font-semibold text-foreground transition-all hover:bg-accent hover:shadow-lg"
             >
               <svg className="h-5 w-5" viewBox="0 0 24 24">
                 <path
@@ -209,7 +209,7 @@ export function AnonymousLimitGate({
             </button>
             <Link
               href="/"
-              className="mt-1 text-center text-sm text-white/40 transition-colors hover:text-white/60"
+              className="mt-1 text-center text-sm text-muted-foreground/60 transition-colors hover:text-muted-foreground"
             >
               Back to home
             </Link>

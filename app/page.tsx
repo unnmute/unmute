@@ -8,6 +8,7 @@ import { createClient } from "@/lib/supabase/client"
 import {Mail, LogOut, User, InstagramIcon} from "lucide-react"
 import Image from "next/image"
 import type { User as SupabaseUser } from "@supabase/supabase-js"
+import { ThemeToggle } from "@/components/theme-toggle"
 
 export default function HomePage() {
   const [user, setUser] = useState<SupabaseUser | null>(null)
@@ -99,6 +100,7 @@ export default function HomePage() {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="flex items-center gap-4"
           >
+            <ThemeToggle />
             <span className="text-sm text-muted-foreground hidden sm:block">Anonymous. Safe. Healing.</span>
             
             {/* Auth Button */}
