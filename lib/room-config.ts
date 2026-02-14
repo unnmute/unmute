@@ -90,31 +90,6 @@ export const ROOM_CONFIGS = [
         "Join our anonymous Loneliness Sanctuary to talk openly about isolation and disconnection.",
   },
   {
-    id: "Backchodi",
-    selectionLabel: "Backchodi",
-    selectionDescription:
-        "Isolated, disconnected, longing, Backchodi",
-    sanctuaryLabel: "Bhakchodi",
-    sessionColor: "#3b82f6",
-    roomPageTextColorClass: "text-blue-400",
-    roomPageBackgroundGradientClass:
-        "from-blue-900/20 via-transparent to-transparent",
-    selectionCardGradientClass:
-        "from-blue-600/20 via-blue-500/10 to-transparent",
-    selectionCardBorderClass: "border-blue-500/30",
-    selectionCardHoverBorderClass: "hover:border-blue-400/60",
-    selectionCardIconColorClass: "text-blue-400",
-    reflectionGradientClass: "from-blue-900/20",
-    loaderGradientFromClass: "from-blue-950",
-    loaderGradientToClass: "to-background",
-    loaderPulseColorClass: "bg-blue-500",
-    loaderRingColorClass: "ring-blue-500/20",
-    avatarBorderClass: "border-blue-500/40",
-    metadataTitle: "Bhakchodi Room | UNMUTE",
-    metadataDescription:
-        "An open space to speak freely and connect casually.",
-  },
-  {
     id: "burnt-out",
     selectionLabel: "BURNT OUT",
     selectionDescription: "Exhausted, depleted, overwhelmed",
