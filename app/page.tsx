@@ -5,7 +5,7 @@ import { SanctuaryRules } from "@/components/sanctuary-rules"
 import { motion } from "framer-motion"
 import { useState, useEffect } from "react"
 import { createClient } from "@/lib/supabase/client"
-import { Mail, LogOut, User } from "lucide-react"
+import {Mail, LogOut, User, InstagramIcon} from "lucide-react"
 import Image from "next/image"
 import type { User as SupabaseUser } from "@supabase/supabase-js"
 
@@ -212,16 +212,29 @@ export default function HomePage() {
                 crisis helpline
               </a>
             </p>
-            
-            {/* Contact Us */}
-            <a
-              href="mailto:unnmute@gmail.com"
-              className="flex items-center gap-2 text-xs text-muted-foreground hover:text-foreground transition-colors"
-              aria-label="Contact UNMUTE via email"
-            >
-              <Mail className="w-3.5 h-3.5" aria-hidden="true" />
-              Contact Us: unnmute@gmail.com
-            </a>
+
+            {/* Contact Links */}
+            <div className="flex flex-col gap-2">
+              <a
+                  href="mailto:unnmute@gmail.com"
+                  className="flex items-center gap-2 text-xs text-muted-foreground hover:text-foreground transition-colors"
+                  aria-label="Email UNMUTE support"
+              >
+                <Mail className="w-3.5 h-3.5" aria-hidden="true" />
+                unnmute@gmail.com
+              </a>
+
+              <a
+                  href="https://instagram.com/unmuteai"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 text-xs text-muted-foreground hover:text-foreground transition-colors"
+                  aria-label="Visit UNMUTE Instagram profile"
+              >
+                <InstagramIcon className="w-3.5 h-3.5" aria-hidden="true" />
+                @unmuteai
+              </a>
+            </div>
           </div>
           
           {/* Trust & Safety Disclaimers */}
