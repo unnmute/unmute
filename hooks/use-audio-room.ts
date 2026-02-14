@@ -166,8 +166,9 @@ export function useAudioRoom(
       await room.connect(data.wsUrl, data.token)
       roomRef.current = room
 
-      // Start muted
-      await room.localParticipant.setMicrophoneEnabled(false)
+      // Start with mic enabled so the first unmute attempt works immediately
+      await room.localParticipant.setMicrophoneEnabled(true)
+      setState((prev) => ({ ...prev, isMuted: false }))
       connectingRef.current = false
     } catch (err) {
       console.error("LiveKit connect failed:", err)
