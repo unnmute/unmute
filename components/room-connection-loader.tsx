@@ -84,7 +84,7 @@ export function RoomConnectionLoader({
             >
               {/* Gradient background */}
               <div
-                  className={absolute inset-0 bg-gradient-to-b ${config.gradientFrom} ${config.gradientTo} opacity-80}
+                  className={`absolute inset-0 bg-gradient-to-b ${config.gradientFrom} ${config.gradientTo} opacity-80`}
               />
 
               {/* Content */}
@@ -94,13 +94,13 @@ export function RoomConnectionLoader({
                     <div className="relative flex items-center justify-center w-40 h-40">
                       {/* Outer ring */}
                       <motion.div
-                          className={absolute inset-0 rounded-full ${config.pulseColor} opacity-[0.06]}
+                          className={`absolute inset-0 rounded-full ${config.pulseColor} opacity-[0.06]`}
                           animate={{ scale: [1, 1.35, 1], opacity: [0.06, 0.02, 0.06] }}
                           transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
                       />
                       {/* Middle ring */}
                       <motion.div
-                          className={absolute inset-4 rounded-full ${config.pulseColor} opacity-[0.1]}
+                          className={`absolute inset-4 rounded-full ${config.pulseColor} opacity-[0.1]`}
                           animate={{ scale: [1, 1.2, 1], opacity: [0.1, 0.04, 0.1] }}
                           transition={{
                             duration: 4,
@@ -111,7 +111,7 @@ export function RoomConnectionLoader({
                       />
                       {/* Inner ring */}
                       <motion.div
-                          className={absolute inset-8 rounded-full ${config.pulseColor} opacity-[0.15]}
+                          className={`absolute inset-8 rounded-full ${config.pulseColor} opacity-[0.15]`}
                           animate={{ scale: [1, 1.1, 1], opacity: [0.15, 0.06, 0.15] }}
                           transition={{
                             duration: 4,
@@ -122,7 +122,7 @@ export function RoomConnectionLoader({
                       />
                       {/* Center dot */}
                       <motion.div
-                          className={w-4 h-4 rounded-full ${config.pulseColor} opacity-60}
+                          className={`w-4 h-4 rounded-full ${config.pulseColor} opacity-60`}
                           animate={{ scale: [1, 1.3, 1] }}
                           transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
                       />
