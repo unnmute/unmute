@@ -196,7 +196,7 @@ export default function HomePage() {
       </section>
 
       {/* Footer */}
-      <footer className="sticky bottom-0 bg-background/95 backdrop-blur-md border-t border-border z-40" role="contentinfo">
+      <footer className="bg-background border-t border-border"  role="contentinfo">
         <div className="container mx-auto px-4 py-3">
           {/* Disclaimers */}
           <div className="flex flex-col sm:flex-row items-center justify-between gap-2 mb-2">

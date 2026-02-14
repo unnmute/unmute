@@ -104,9 +104,9 @@ export function usePersistentTimer({
   // 🔹 BroadcastChannel (browser-only)
   useEffect(() => {
     if (typeof window === "undefined") return
-    if (!("BroadcastChannel" in window)) return
-
-    const channel = new BroadcastChannel(channelName)
+    const BroadcastChannelCtor = window.BroadcastChannel
+    if (typeof BroadcastChannelCtor !== "function") return
+    const channel = new BroadcastChannelCtor(channelName)
     broadcastChannelRef.current = channel
 
     channel.onmessage = (event) => {
