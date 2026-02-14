@@ -62,7 +62,7 @@ export const ROOM_CONFIGS = [
         "Anxiety Sanctuary — Anonymous Emotional Support | UNMUTE",
     metadataDescription:
         "Join our anonymous Anxiety Sanctuary to talk openly about worry, racing thoughts, and unease.",
-    maxParticipants: 2,
+    maxParticipants: 10,
   },
   {
     id: "lonely",
