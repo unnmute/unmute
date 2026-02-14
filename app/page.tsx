@@ -212,6 +212,10 @@ export default function HomePage() {
                 crisis helpline
               </a>
             </p>
+            <p className="text-xs text-muted-foreground">
+              © {new Date().getFullYear()} UNMUTE. All rights reserved.
+            </p>
+
 
             {/* Contact Links */}
             <div className="flex flex-col gap-2">
