@@ -2,6 +2,7 @@ import React from "react"
 import type { Metadata, Viewport } from 'next'
 import { Inter } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
+import { ThemeProvider } from 'next-themes'
 import './globals.css'
 
 
@@ -53,7 +54,10 @@ export const metadata: Metadata = {
 }
 
 export const viewport: Viewport = {
-  themeColor: '#0a0a0a',
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#fafafa' },
+    { media: '(prefers-color-scheme: dark)', color: '#0a0a0a' },
+  ],
   width: 'device-width',
   initialScale: 1,
 }
@@ -64,9 +68,16 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-      <html lang="en">
+      <html lang="en" suppressHydrationWarning>
       <body className={`font-sans antialiased min-h-screen bg-background text-foreground`}>
-      {children}
+      <ThemeProvider
+        attribute="class"
+        defaultTheme="system"
+        enableSystem
+        disableTransitionOnChange
+      >
+        {children}
+      </ThemeProvider>
       <Analytics />
       </body>
       </html>

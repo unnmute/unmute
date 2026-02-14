@@ -240,7 +240,7 @@ function ReflectionContent() {
                 transition={{ delay: 0.8 }}
                 className="w-full mt-6"
               >
-                <label htmlFor="feedback-note" className="block text-sm font-semibold text-white mb-2">
+                <label htmlFor="feedback-note" className="block text-sm font-semibold text-foreground mb-2">
                   Anything you would like to share? (optional)
                 </label>
                 <textarea
