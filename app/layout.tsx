@@ -4,7 +4,7 @@ import { Inter } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { ThemeProvider } from 'next-themes'
 import './globals.css'
-
+import Script from "next/script"
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -61,6 +61,8 @@ export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
 }
+
+// other imports...
 
 export default function RootLayout({
                                      children,
