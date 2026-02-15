@@ -78,7 +78,27 @@ export default function RootLayout({
       >
         {children}
       </ThemeProvider>
+
       <Analytics />
+
+      {/* Google Analytics */}
+      {process.env.NODE_ENV === "production" && (
+          <>
+            <Script
+                src="https://www.googletagmanager.com/gtag/js?id=G-ZJ03EEBFNN"
+                strategy="afterInteractive"
+            />
+            <Script id="google-analytics" strategy="afterInteractive">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', 'G-ZJ03EEBFNN');
+              `}
+            </Script>
+          </>
+      )}
+
       </body>
       </html>
   )
