@@ -199,7 +199,8 @@ export function RoomClient({ emotion }: { emotion: string }) {
   // }
 
   // Determine connection loader visibility
-  const isRoomConnecting = !mounted || !anonymousUserId || isLoading
+  // Need to wait for: mounted, anonymousUserId, loading complete, room exists, AND realtime connected
+  const isRoomConnecting = !mounted || !anonymousUserId || isLoading || !room?.id || !isRealtimeConnected
   const hasConnectionError = !!error
 
 
