@@ -237,7 +237,9 @@ export function useRealtimeRoom(roomId: string | null, userId: string | null) {
   const [isConnected, setIsConnected] = useState(false)
 
   const channelRef = useRef<RealtimeChannel | null>(null)
-  const supabase = createClient()
+  // Use a ref to keep the supabase client stable across renders
+  const supabaseRef = useRef(createClient())
+  const supabase = supabaseRef.current
 
   // 🔒 DO NOT generate avatar until userId exists
   const myAvatar = userId ? getRandomAnimal(userId) : null
@@ -319,17 +321,25 @@ export function useRealtimeRoom(roomId: string | null, userId: string | null) {
       }, 2000)
     })
 
-    channel.subscribe((status) => {
-      console.log("Realtime status:", status)
+    channel.subscribe((status, err) => {
+      console.log("[v0] Realtime subscription status:", status, err ? `Error: ${err.message}` : "")
 
       if (status === "SUBSCRIBED") {
+        console.log("[v0] Realtime SUBSCRIBED - setting isConnected to true")
         setIsConnected(true)
 
         channel.track({
           username: myAvatar.name,
           emoji: myAvatar.emoji,
           joinedAt: new Date().toISOString(),
+        }).then(() => {
+          console.log("[v0] Presence tracked successfully")
+        }).catch((trackErr) => {
+          console.log("[v0] Presence track error:", trackErr)
         })
+      } else if (status === "CHANNEL_ERROR" || status === "TIMED_OUT") {
+        console.log("[v0] Realtime connection failed:", status)
+        setIsConnected(false)
       }
     })
 
@@ -339,7 +349,8 @@ export function useRealtimeRoom(roomId: string | null, userId: string | null) {
       channelRef.current = null
       setIsConnected(false)
     }
-  }, [roomId, userId])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [roomId, userId, myAvatar?.name, myAvatar?.emoji])
 
   const broadcastReaction = useCallback(
     async (type: "heart" | "wave" | "peace") => {

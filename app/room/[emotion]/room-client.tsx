@@ -22,29 +22,8 @@ export function RoomClient({ emotion }: { emotion: string }) {
   const [mounted, setMounted] = useState(false)
   const [isMuted, setIsMuted] = useState(true)
 
-  // Generate a stable anonymous user ID
-  // const anonymousUserId = useMemo(() => {
-  //   if (typeof window === "undefined") return "user-ssr"
-  //   const stored = sessionStorage.getItem("unmute-user-id")
-  //   if (stored) return stored
-  //   const newId = `anon-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`
-  //   sessionStorage.setItem("unmute-user-id", newId)
-  //   return newId
-  // }, [])
-  const [anonymousUserId, setAnonymousUserId] = useState<string | null>(null)
-  useEffect(() => {
-    const stored = sessionStorage.getItem("unmute-user-id")
-    if (stored) {
-      setAnonymousUserId(stored)
-    } else {
-      const newId = `anon-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`
-      sessionStorage.setItem("unmute-user-id", newId)
-      setAnonymousUserId(newId)
-    } }, [])
-
-
-  // Backend session management
-  const { room, session, isLoading, error, leaveRoom, sendReaction, joinRoom } = useSession(safeEmotion)
+  // Backend session management - use the anonymousId from useSession for consistency
+  const { room, session, isLoading, error, leaveRoom, sendReaction, joinRoom, anonymousId: anonymousUserId } = useSession(safeEmotion)
   // Realtime presence and reactions
   const {
     participants,
@@ -201,6 +180,18 @@ export function RoomClient({ emotion }: { emotion: string }) {
   // Determine connection loader visibility
   const isRoomConnecting = !mounted || !anonymousUserId || isLoading
   const hasConnectionError = !!error
+  
+  // Debug logging
+  console.log("[v0] RoomClient state:", {
+    mounted,
+    anonymousUserId,
+    isLoading,
+    roomId: room?.id,
+    isRealtimeConnected,
+    error,
+    isRoomConnecting,
+    hasConnectionError
+  })
 
 
   return (
