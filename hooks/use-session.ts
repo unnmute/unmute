@@ -43,8 +43,13 @@ export function useSession(emotion: string) {
 
   // Join a room and create a session
   const joinRoom = useCallback(async () => {
-    if (!anonymousId) return
+    console.log("[v0] joinRoom called with:", { anonymousId, emotion })
+    if (!anonymousId) {
+      console.log("[v0] joinRoom aborted: no anonymousId")
+      return
+    }
     if (!emotion || emotion === "undefined") {
+      console.log("[v0] joinRoom aborted: invalid emotion")
       setError("Emotion is required")
       setIsLoading(false)
       return
@@ -55,27 +60,33 @@ export function useSession(emotion: string) {
 
     try {
       // Step 1: Find or create a room
+      console.log("[v0] Step 1: Finding room for emotion:", emotion)
       const roomResponse = await fetch(`/api/rooms?emotion=${emotion}`)
       const roomData = await roomResponse.json()
+      console.log("[v0] Room API response:", { ok: roomResponse.ok, roomData })
 
       if (!roomResponse.ok) {
         throw new Error(roomData.error || "Failed to find room")
       }
 
       // Step 2: Join the room
+      console.log("[v0] Step 2: Joining room:", roomData.room.id)
       const joinResponse = await fetch("/api/rooms", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ roomId: roomData.room.id, action: "join" }),
       })
       const joinData = await joinResponse.json()
+      console.log("[v0] Join API response:", { ok: joinResponse.ok, joinData })
       if (!joinResponse.ok) {
         throw new Error(joinData.error || "Failed to join room")
       }
 
       setRoom(roomData.room)
+      console.log("[v0] Room state set:", roomData.room)
 
       // Step 3: Create a session
+      console.log("[v0] Step 3: Creating session")
       const sessionResponse = await fetch("/api/sessions", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -86,16 +97,20 @@ export function useSession(emotion: string) {
         }),
       })
       const sessionData = await sessionResponse.json()
+      console.log("[v0] Session API response:", { ok: sessionResponse.ok, sessionData })
 
       if (!sessionResponse.ok) {
         throw new Error(sessionData.error || "Failed to create session")
       }
 
       setSession(sessionData.session)
+      console.log("[v0] Session state set:", sessionData.session)
     } catch (err) {
+      console.log("[v0] joinRoom error:", err)
       setError(err instanceof Error ? err.message : "An error occurred")
     } finally {
       setIsLoading(false)
+      console.log("[v0] joinRoom completed, isLoading set to false")
     }
   }, [emotion, anonymousId])
 
@@ -170,10 +185,12 @@ export function useSession(emotion: string) {
 
   // Auto-join when component mounts
   useEffect(() => {
+    console.log("[v0] useSession auto-join check:", { anonymousId, hasRoom: !!room, hasSession: !!session, emotion })
     if (anonymousId && !room && !session) {
+      console.log("[v0] useSession calling joinRoom")
       joinRoom()
     }
-  }, [anonymousId, room, session, joinRoom])
+  }, [anonymousId, room, session, joinRoom, emotion])
 
   return {
     room,

@@ -244,7 +244,11 @@ export function useRealtimeRoom(roomId: string | null, userId: string | null) {
 
   useEffect(() => {
     // 🔴 HARD GUARDS (THIS FIXES "CONNECTING...")
-    if (!roomId || !userId || !myAvatar) return
+    console.log("[v0] useRealtimeRoom effect:", { roomId, userId, hasAvatar: !!myAvatar })
+    if (!roomId || !userId || !myAvatar) {
+      console.log("[v0] useRealtimeRoom skipping - missing:", { roomId: !roomId, userId: !userId, myAvatar: !myAvatar })
+      return
+    }
 
     setIsConnected(false)
     setParticipants([])
