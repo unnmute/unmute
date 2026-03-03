@@ -90,6 +90,7 @@ export default function HomePage() {
                 width={32}
                 height={32}
                 className="rounded-md"
+                style={{ width: 32, height: "auto" }}
               />
               UNMUTE
             </span>
