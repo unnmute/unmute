@@ -1,0 +1,179 @@
+{
+  "version": 3,
+  "pages404": true,
+  "caseSensitive": false,
+  "basePath": "",
+  "redirects": [
+    {
+      "source": "/:path+/",
+      "destination": "/:path+",
+      "internal": true,
+      "priority": true,
+      "statusCode": 308,
+      "regex": "^(?:/((?:[^/]+?)(?:/(?:[^/]+?))*))/$"
+    }
+  ],
+  "headers": [],
+  "rewrites": {
+    "beforeFiles": [],
+    "afterFiles": [],
+    "fallback": []
+  },
+  "dynamicRoutes": [
+    {
+      "page": "/room/[emotion]",
+      "regex": "^/room/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPemotion": "nxtPemotion"
+      },
+      "namedRegex": "^/room/(?<nxtPemotion>[^/]+?)(?:/)?$"
+    }
+  ],
+  "staticRoutes": [
+    {
+      "page": "/",
+      "regex": "^/(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/(?:/)?$"
+    },
+    {
+      "page": "/_global-error",
+      "regex": "^/_global\\-error(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/_global\\-error(?:/)?$"
+    },
+    {
+      "page": "/_not-found",
+      "regex": "^/_not\\-found(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/_not\\-found(?:/)?$"
+    },
+    {
+      "page": "/api/analytics",
+      "regex": "^/api/analytics(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/analytics(?:/)?$"
+    },
+    {
+      "page": "/api/chat",
+      "regex": "^/api/chat(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/chat(?:/)?$"
+    },
+    {
+      "page": "/api/donate",
+      "regex": "^/api/donate(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/donate(?:/)?$"
+    },
+    {
+      "page": "/api/echoes",
+      "regex": "^/api/echoes(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/echoes(?:/)?$"
+    },
+    {
+      "page": "/api/echoes/resonate",
+      "regex": "^/api/echoes/resonate(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/echoes/resonate(?:/)?$"
+    },
+    {
+      "page": "/api/livekit/token",
+      "regex": "^/api/livekit/token(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/livekit/token(?:/)?$"
+    },
+    {
+      "page": "/api/reactions",
+      "regex": "^/api/reactions(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/reactions(?:/)?$"
+    },
+    {
+      "page": "/api/reflections",
+      "regex": "^/api/reflections(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/reflections(?:/)?$"
+    },
+    {
+      "page": "/api/rooms",
+      "regex": "^/api/rooms(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/rooms(?:/)?$"
+    },
+    {
+      "page": "/api/sessions",
+      "regex": "^/api/sessions(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/sessions(?:/)?$"
+    },
+    {
+      "page": "/auth/callback",
+      "regex": "^/auth/callback(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/auth/callback(?:/)?$"
+    },
+    {
+      "page": "/auth/confirm",
+      "regex": "^/auth/confirm(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/auth/confirm(?:/)?$"
+    },
+    {
+      "page": "/auth/error",
+      "regex": "^/auth/error(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/auth/error(?:/)?$"
+    },
+    {
+      "page": "/banned",
+      "regex": "^/banned(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/banned(?:/)?$"
+    },
+    {
+      "page": "/echoes",
+      "regex": "^/echoes(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/echoes(?:/)?$"
+    },
+    {
+      "page": "/listen",
+      "regex": "^/listen(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/listen(?:/)?$"
+    },
+    {
+      "page": "/reflection",
+      "regex": "^/reflection(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/reflection(?:/)?$"
+    },
+    {
+      "page": "/unsent",
+      "regex": "^/unsent(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/unsent(?:/)?$"
+    }
+  ],
+  "dataRoutes": [],
+  "rsc": {
+    "header": "rsc",
+    "varyHeader": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch",
+    "prefetchHeader": "next-router-prefetch",
+    "didPostponeHeader": "x-nextjs-postponed",
+    "contentTypeHeader": "text/x-component",
+    "suffix": ".rsc",
+    "prefetchSuffix": ".prefetch.rsc",
+    "prefetchSegmentHeader": "next-router-segment-prefetch",
+    "prefetchSegmentSuffix": ".segment.rsc",
+    "prefetchSegmentDirSuffix": ".segments",
+    "clientParamParsing": false,
+    "dynamicRSCPrerender": false
+  },
+  "rewriteHeaders": {
+    "pathHeader": "x-nextjs-rewritten-path",
+    "queryHeader": "x-nextjs-rewritten-query"
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "sorted_middleware": [
+    "/api/livekit/token/route"
+  ],
+  "middleware": {},
+  "instrumentation": null,
+  "functions": {
+    "/api/livekit/token/route": {
+      "files": [
+        "server/middleware-build-manifest.js",
+        "server/interception-route-rewrite-manifest.js",
+        "server/server-reference-manifest.js",
+        "server/app/api/livekit/token/route_client-reference-manifest.js",
+        "server/edge/chunks/_next-internal_server_app_api_livekit_token_route_actions_439d84b7.js",
+        "server/edge/chunks/1dff6_next_dist_esm_shared_lib_48e2eb44._.js",
+        "server/edge/chunks/1dff6_next_dist_esm_server_f0809c51._.js",
+        "server/edge/chunks/1dff6_next_dist_esm_4efa1e8e._.js",
+        "server/edge/chunks/1dff6_next_dist_compiled_452fa107._.js",
+        "server/edge/chunks/1dff6_next_dist_598ed208._.js",
+        "server/edge/chunks/edge-wrapper_c905e530.js",
+        "server/edge/chunks/407f6_jose_dist_webapi_87260445._.js",
+        "server/edge/chunks/[root-of-the-server]__d67b8312._.js",
+        "server/edge/chunks/turbopack-edge-wrapper_efabf70c.js"
+      ],
+      "name": "app/api/livekit/token/route",
+      "page": "/api/livekit/token/route",
+      "matchers": [
+        {
+          "regexp": "^/api/livekit/token(?:/)?$",
+          "originalSource": "/api/livekit/token"
+        }
+      ],
+      "wasm": [],
+      "assets": [],
+      "env": {
+        "__NEXT_BUILD_ID": "development",
+        "NEXT_SERVER_ACTIONS_ENCRYPTION_KEY": "vAgXS0Ad1eFfHTqpIU1byZyRxPSlVHdiNSr3wJP83cI=",
+        "__NEXT_PREVIEW_MODE_ID": "9c77c502c1c01d3169c1c738804b6150",
+        "__NEXT_PREVIEW_MODE_ENCRYPTION_KEY": "46a73ec36c94c4ef744e17bc2c97402d1fa04433f5c4a7782db9c0ebc1757853",
+        "__NEXT_PREVIEW_MODE_SIGNING_KEY": "c898a218284cc983b9993ac13a984e40bd525cd068dda3f12ffae630661b747e"
+      }
+    }
+  }
+}

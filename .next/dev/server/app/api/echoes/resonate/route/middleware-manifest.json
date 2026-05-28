@@ -1,0 +1,46 @@
+{
+  "sorted_middleware": [
+    "/api/echoes/resonate/route"
+  ],
+  "middleware": {},
+  "instrumentation": null,
+  "functions": {
+    "/api/echoes/resonate/route": {
+      "files": [
+        "server/middleware-build-manifest.js",
+        "server/interception-route-rewrite-manifest.js",
+        "server/server-reference-manifest.js",
+        "server/app/api/echoes/resonate/route_client-reference-manifest.js",
+        "server/edge/chunks/_next-internal_server_app_api_echoes_resonate_route_actions_d5375ce2.js",
+        "server/edge/chunks/b8d48_next_dist_esm_shared_lib_832cb3e3._.js",
+        "server/edge/chunks/b8d48_next_dist_esm_server_bbf2bf67._.js",
+        "server/edge/chunks/b8d48_next_dist_esm_c14785c3._.js",
+        "server/edge/chunks/b8d48_next_dist_compiled_2b3ee25b._.js",
+        "server/edge/chunks/b8d48_next_dist_d6769b9e._.js",
+        "server/edge/chunks/edge-wrapper_3b9feed3.js",
+        "server/edge/chunks/dae82_@supabase_postgrest-js_dist_index_mjs_45933d73._.js",
+        "server/edge/chunks/e2421_@supabase_auth-js_dist_module_8b030f69._.js",
+        "server/edge/chunks/node_modules__pnpm_20e45d5a._.js",
+        "server/edge/chunks/[root-of-the-server]__0937a8c9._.js",
+        "server/edge/chunks/turbopack-edge-wrapper_ed2c2385.js"
+      ],
+      "name": "app/api/echoes/resonate/route",
+      "page": "/api/echoes/resonate/route",
+      "matchers": [
+        {
+          "regexp": "^/api/echoes/resonate(?:/)?$",
+          "originalSource": "/api/echoes/resonate"
+        }
+      ],
+      "wasm": [],
+      "assets": [],
+      "env": {
+        "__NEXT_BUILD_ID": "development",
+        "NEXT_SERVER_ACTIONS_ENCRYPTION_KEY": "vAgXS0Ad1eFfHTqpIU1byZyRxPSlVHdiNSr3wJP83cI=",
+        "__NEXT_PREVIEW_MODE_ID": "9589db8c521e24a97e068abe99d66819",
+        "__NEXT_PREVIEW_MODE_ENCRYPTION_KEY": "888d302096b1de553657caea0bcbcdd2c88b52a9c8190a06b347b0407001804c",
+        "__NEXT_PREVIEW_MODE_SIGNING_KEY": "89d8ddd1a9fc947f74834b74dc98d30b32a21f04282fabdbcd91c2d2b9671e9a"
+      }
+    }
+  }
+}

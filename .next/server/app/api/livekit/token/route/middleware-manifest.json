@@ -1,0 +1,39 @@
+{
+  "sorted_middleware": [
+    "/api/livekit/token/route"
+  ],
+  "middleware": {},
+  "instrumentation": null,
+  "functions": {
+    "/api/livekit/token/route": {
+      "files": [
+        "server/middleware-build-manifest.js",
+        "server/interception-route-rewrite-manifest.js",
+        "server/server-reference-manifest.js",
+        "server/app/api/livekit/token/route_client-reference-manifest.js",
+        "server/edge/chunks/_next-internal_server_app_api_livekit_token_route_actions_439d84b7.js",
+        "server/edge/chunks/[root-of-the-server]__249dddeb._.js",
+        "server/edge/chunks/node_modules_next_dist_a814b681._.js",
+        "server/edge/chunks/node_modules_next_dist_esm_build_templates_edge-app-route_22d147a8.js",
+        "server/edge/chunks/turbopack-edge-wrapper_5eff1d34.js"
+      ],
+      "name": "app/api/livekit/token/route",
+      "page": "/api/livekit/token/route",
+      "matchers": [
+        {
+          "regexp": "^/api/livekit/token(?:/)?$",
+          "originalSource": "/api/livekit/token"
+        }
+      ],
+      "wasm": [],
+      "assets": [],
+      "env": {
+        "__NEXT_BUILD_ID": "LeoQLKjZq-AazUwpGWUFC",
+        "NEXT_SERVER_ACTIONS_ENCRYPTION_KEY": "pVljroKXm0Fb+HI3voRbo5VLkYcSzTRd5+fubUO3gVw=",
+        "__NEXT_PREVIEW_MODE_ID": "0a54e046d226eb008f65b32f4bf09c0f",
+        "__NEXT_PREVIEW_MODE_ENCRYPTION_KEY": "e7e58ea2aa7cadca6e464641abec2781a37b83e558c6fad1fb2d9d064a1c7a58",
+        "__NEXT_PREVIEW_MODE_SIGNING_KEY": "7510c29d18b6c6afc5a7d29f41f09d2a5927b3ca2e749197f926104266bb64c1"
+      }
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "pages": {},
+  "app": {
+    "[project]/app/orbis-nft/page": [
+      "static/media/83afe278b6a6bb3c-s.p.3a6ba036.woff2",
+      "static/media/9e9f04e3c37952ab-s.p.4d24b8e7.woff2",
+      "static/media/e5307acbe65abfed-s.p.52d9dda9.woff2"
+    ]
+  },
+  "appUsingSizeAdjust": true,
+  "pagesUsingSizeAdjust": false
+}

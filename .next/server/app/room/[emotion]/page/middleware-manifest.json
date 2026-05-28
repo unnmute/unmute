@@ -1,0 +1,55 @@
+{
+  "sorted_middleware": [
+    "/room/[emotion]/page"
+  ],
+  "middleware": {},
+  "instrumentation": null,
+  "functions": {
+    "/room/[emotion]/page": {
+      "files": [
+        "server/middleware-build-manifest.js",
+        "server/interception-route-rewrite-manifest.js",
+        "server/next-font-manifest.js",
+        "server/server-reference-manifest.js",
+        "server/edge/chunks/ssr/node_modules_96fb7a9a._.js",
+        "server/edge/chunks/ssr/node_modules_next_dist_b424979c._.js",
+        "server/edge/chunks/ssr/node_modules_next_dist_esm_f49f2b82._.js",
+        "server/edge/chunks/ssr/node_modules_519dd824._.js",
+        "server/edge/chunks/ssr/_a16df75e._.js",
+        "server/edge/chunks/ssr/[root-of-the-server]__0726f170._.js",
+        "server/edge/chunks/ssr/node_modules_next_dist_6c36bcdf._.js",
+        "server/edge/chunks/ssr/node_modules_livekit-client_dist_livekit-client_esm_mjs_216540fc._.js",
+        "server/edge/chunks/ssr/_cc3044d2._.js",
+        "server/edge/chunks/ssr/node_modules_next_dist_esm_72fd41e8._.js",
+        "server/app/room/[emotion]/page_client-reference-manifest.js",
+        "server/edge/chunks/ssr/_next-internal_server_app_room_[emotion]_page_actions_7896ab9e.js",
+        "server/edge/chunks/ssr/[root-of-the-server]__c34b0c4a._.js",
+        "server/edge/chunks/ssr/node_modules_next_dist_c6cf69b3._.js",
+        "server/edge/chunks/ssr/node_modules_next_dist_compiled_2adaed9e._.js",
+        "server/edge/chunks/ssr/_f9f70696._.js",
+        "server/edge/chunks/ssr/node_modules_next_dist_b4d008d4._.js",
+        "server/edge/chunks/ssr/node_modules_next_dist_esm_d627f0c8._.js",
+        "server/edge/chunks/ssr/node_modules_next_dist_6e01f23c._.js",
+        "server/edge/chunks/ssr/turbopack-edge-wrapper_35f5b40e.js",
+        "server/app/room/[emotion]/page/react-loadable-manifest.js"
+      ],
+      "name": "app/room/[emotion]/page",
+      "page": "/room/[emotion]/page",
+      "matchers": [
+        {
+          "regexp": "^/room/(?P<nxtPemotion>[^/]+?)(?:/)?$",
+          "originalSource": "/room/[emotion]"
+        }
+      ],
+      "wasm": [],
+      "assets": [],
+      "env": {
+        "__NEXT_BUILD_ID": "LeoQLKjZq-AazUwpGWUFC",
+        "NEXT_SERVER_ACTIONS_ENCRYPTION_KEY": "pVljroKXm0Fb+HI3voRbo5VLkYcSzTRd5+fubUO3gVw=",
+        "__NEXT_PREVIEW_MODE_ID": "0a54e046d226eb008f65b32f4bf09c0f",
+        "__NEXT_PREVIEW_MODE_ENCRYPTION_KEY": "e7e58ea2aa7cadca6e464641abec2781a37b83e558c6fad1fb2d9d064a1c7a58",
+        "__NEXT_PREVIEW_MODE_SIGNING_KEY": "7510c29d18b6c6afc5a7d29f41f09d2a5927b3ca2e749197f926104266bb64c1"
+      }
+    }
+  }
+}

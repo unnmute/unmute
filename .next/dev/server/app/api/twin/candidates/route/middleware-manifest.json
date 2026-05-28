@@ -1,0 +1,46 @@
+{
+  "sorted_middleware": [
+    "/api/twin/candidates/route"
+  ],
+  "middleware": {},
+  "instrumentation": null,
+  "functions": {
+    "/api/twin/candidates/route": {
+      "files": [
+        "server/middleware-build-manifest.js",
+        "server/interception-route-rewrite-manifest.js",
+        "server/server-reference-manifest.js",
+        "server/app/api/twin/candidates/route_client-reference-manifest.js",
+        "server/edge/chunks/_next-internal_server_app_api_twin_candidates_route_actions_a7905a92.js",
+        "server/edge/chunks/1dff6_next_dist_esm_shared_lib_48e2eb44._.js",
+        "server/edge/chunks/1dff6_next_dist_esm_server_820f1b11._.js",
+        "server/edge/chunks/1dff6_next_dist_esm_f2242ed8._.js",
+        "server/edge/chunks/1dff6_next_dist_compiled_452fa107._.js",
+        "server/edge/chunks/1dff6_next_dist_598ed208._.js",
+        "server/edge/chunks/edge-wrapper_a6acff2c.js",
+        "server/edge/chunks/dae82_@supabase_postgrest-js_dist_index_mjs_45933d73._.js",
+        "server/edge/chunks/e2421_@supabase_auth-js_dist_module_8b030f69._.js",
+        "server/edge/chunks/node_modules__pnpm_20e45d5a._.js",
+        "server/edge/chunks/[root-of-the-server]__0efe640d._.js",
+        "server/edge/chunks/turbopack-edge-wrapper_e42816e6.js"
+      ],
+      "name": "app/api/twin/candidates/route",
+      "page": "/api/twin/candidates/route",
+      "matchers": [
+        {
+          "regexp": "^/api/twin/candidates(?:/)?$",
+          "originalSource": "/api/twin/candidates"
+        }
+      ],
+      "wasm": [],
+      "assets": [],
+      "env": {
+        "__NEXT_BUILD_ID": "development",
+        "NEXT_SERVER_ACTIONS_ENCRYPTION_KEY": "vAgXS0Ad1eFfHTqpIU1byZyRxPSlVHdiNSr3wJP83cI=",
+        "__NEXT_PREVIEW_MODE_ID": "9c77c502c1c01d3169c1c738804b6150",
+        "__NEXT_PREVIEW_MODE_ENCRYPTION_KEY": "46a73ec36c94c4ef744e17bc2c97402d1fa04433f5c4a7782db9c0ebc1757853",
+        "__NEXT_PREVIEW_MODE_SIGNING_KEY": "c898a218284cc983b9993ac13a984e40bd525cd068dda3f12ffae630661b747e"
+      }
+    }
+  }
+}

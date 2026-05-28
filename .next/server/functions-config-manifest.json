@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "functions": {
+    "/api/echoes": {},
+    "/api/echoes/resonate": {},
+    "/api/donate": {},
+    "/api/livekit/token": {},
+    "/api/reflections": {},
+    "/api/rooms": {},
+    "/api/sessions": {},
+    "/api/reactions": {},
+    "/auth/callback": {},
+    "/api/analytics": {},
+    "/api/chat": {},
+    "/room/[emotion]": {}
+  }
+}
