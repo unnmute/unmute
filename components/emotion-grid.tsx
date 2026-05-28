@@ -1,6 +1,7 @@
 "use client"
 
 import { motion } from "framer-motion"
+import type { Variants } from "framer-motion"
 import Link from "next/link"
 import { Brain, Heart, Flame, MessageCircle } from "lucide-react"
 
@@ -58,7 +59,7 @@ const containerVariants = {
   },
 }
 
-const itemVariants = {
+const itemVariants: Variants = {
   hidden: { opacity: 0, y: 20, scale: 0.95 },
   visible: {
     opacity: 1,

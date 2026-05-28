@@ -25,8 +25,8 @@ export function usePersistentTimer({
   const [isNewSession, setIsNewSession] = useState(false)
   const [isResumed, setIsResumed] = useState(false)
 
-  const intervalRef = useRef<NodeJS.Timeout | null>(null)
-  const broadcastChannelRef = useRef<BroadcastChannel | null>(null)
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
+  const broadcastChannelRef = useRef<InstanceType<typeof window.BroadcastChannel> | null>(null)
 
   const storageKey = `unmute-timer-${emotion}-${roomId ?? "pending"}`
   const channelName = `unmute-timer-${emotion}`
@@ -106,7 +106,7 @@ export function usePersistentTimer({
     if (typeof window === "undefined") return
     if (!("BroadcastChannel" in window)) return
 
-    const channel = new BroadcastChannel(channelName)
+    const channel = new window.BroadcastChannel(channelName)
     broadcastChannelRef.current = channel
 
     channel.onmessage = (event) => {

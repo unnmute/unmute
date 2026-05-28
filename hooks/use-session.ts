@@ -1,6 +1,14 @@
 "use client"
 
 import { useState, useCallback, useEffect } from "react"
+import { useRouter } from "next/navigation"
+import { getFingerprint } from "@/lib/fingerprint"
+import { createClient } from "@/lib/supabase/client"
+import type { User } from "@supabase/supabase-js"
+
+const FREE_SESSION_LIMIT = 3
+const FREE_SESSION_COUNT_KEY = "unmute_free_anonymous_sessions_used"
+const FREE_SESSION_ROOMS_KEY = "unmute_free_anonymous_session_rooms"
 
 interface Room {
   id: string
@@ -15,30 +23,160 @@ interface Session {
   anonymous_id: string
   emotion: string
   joined_at: string
-}
-
-// Generate a unique anonymous ID for this browser session
-function getOrCreateAnonymousId(): string {
-  if (typeof window === "undefined") return ""
-  
-  let anonymousId = sessionStorage.getItem("unmute_anonymous_id")
-  if (!anonymousId) {
-    anonymousId = `anon_${Date.now()}_${Math.random().toString(36).substring(2, 15)}`
-    sessionStorage.setItem("unmute_anonymous_id", anonymousId)
-  }
-  return anonymousId
+  room_alias?: string
 }
 
 export function useSession(emotion: string) {
+  const router = useRouter()
   const [room, setRoom] = useState<Room | null>(null)
   const [session, setSession] = useState<Session | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [anonymousId, setAnonymousId] = useState<string>("")
+  const [freeLimitReached, setFreeLimitReached] = useState(false)
+  const [freeSessionsUsed, setFreeSessionsUsed] = useState(0)
 
   // Initialize anonymous ID
   useEffect(() => {
-    setAnonymousId(getOrCreateAnonymousId())
+    setAnonymousId(getFingerprint())
+  }, [])
+
+  const syncDeviceJoin = useCallback(async (user?: User | null) => {
+    const fp = getFingerprint()
+    if (!fp) return { isBanned: false, joinCount: 0 }
+    const supabase = createClient()
+    const deviceData: {
+      fingerprint: string
+      last_seen: string
+      user_email?: string
+      google_user_id?: string
+    } = {
+      fingerprint: fp,
+      last_seen: new Date().toISOString(),
+    }
+
+    if (user?.email) {
+      deviceData.user_email = user.email
+      deviceData.google_user_id = user.id
+    }
+
+    const { error: upsertError } = await supabase
+      .from("anonymous_device_joins")
+      .upsert(
+        deviceData,
+        { onConflict: "fingerprint" }
+      )
+
+    if (upsertError) {
+      console.error("Error registering device fingerprint:", upsertError)
+    }
+
+    const { data, error } = await supabase
+      .from("anonymous_device_joins")
+      .select("is_banned, join_count")
+      .eq("fingerprint", fp)
+      .maybeSingle()
+
+    if (error) {
+      console.error("Error checking ban status:", error)
+      return { isBanned: false, joinCount: 0 }
+    }
+
+    return {
+      isBanned: data?.is_banned === true,
+      joinCount: typeof data?.join_count === "number" ? data.join_count : 0,
+    }
+  }, [])
+
+  const incrementDeviceJoinCount = useCallback(async (user?: User | null) => {
+    const fp = getFingerprint()
+    if (!fp) return null
+
+    const supabase = createClient()
+    const { data } = await supabase
+      .from("anonymous_device_joins")
+      .select("join_count")
+      .eq("fingerprint", fp)
+      .maybeSingle()
+
+    const nextCount = (typeof data?.join_count === "number" ? data.join_count : 0) + 1
+    const updateData: {
+      join_count: number
+      last_seen: string
+      last_joined_at: string
+      user_email?: string
+      google_user_id?: string
+    } = {
+      join_count: nextCount,
+      last_seen: new Date().toISOString(),
+      last_joined_at: new Date().toISOString(),
+    }
+
+    if (user?.email) {
+      updateData.user_email = user.email
+      updateData.google_user_id = user.id
+    }
+
+    const { error } = await supabase
+      .from("anonymous_device_joins")
+      .update(updateData)
+      .eq("fingerprint", fp)
+
+    if (error) {
+      console.error("Error updating join count:", error)
+      return null
+    }
+
+    return nextCount
+  }, [])
+
+  const getFreeSessionState = useCallback(() => {
+    if (typeof window === "undefined") {
+      return { count: 0, countedRooms: [] as string[] }
+    }
+
+    const count = Number(localStorage.getItem(FREE_SESSION_COUNT_KEY) || "0")
+    let countedRooms: string[] = []
+
+    try {
+      const parsed = JSON.parse(localStorage.getItem(FREE_SESSION_ROOMS_KEY) || "[]")
+      countedRooms = Array.isArray(parsed) ? parsed : []
+    } catch {
+      countedRooms = []
+    }
+
+    return {
+      count: Number.isFinite(count) ? count : 0,
+      countedRooms: Array.isArray(countedRooms) ? countedRooms : [],
+    }
+  }, [])
+
+  const countFreeSessionForRoom = useCallback((roomId: string) => {
+    const { count, countedRooms } = getFreeSessionState()
+    if (countedRooms.includes(roomId)) return count
+
+    const nextCount = count + 1
+    localStorage.setItem(FREE_SESSION_COUNT_KEY, String(nextCount))
+    localStorage.setItem(FREE_SESSION_ROOMS_KEY, JSON.stringify([...countedRooms, roomId]))
+    setFreeSessionsUsed(nextCount)
+    return nextCount
+  }, [getFreeSessionState])
+
+  const signInWithGoogle = useCallback(async () => {
+    const supabase = createClient()
+    const redirectTo = typeof window !== "undefined" ? window.location.href : undefined
+
+    await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo,
+        queryParams: {
+          access_type: "offline",
+          prompt: "consent",
+        },
+        skipBrowserRedirect: false,
+      },
+    })
   }, [])
 
   // Join a room and create a session
@@ -54,6 +192,24 @@ export function useSession(emotion: string) {
     setError(null)
 
     try {
+      const supabase = createClient()
+      const { data: { user } } = await supabase.auth.getUser()
+      const isSignedIn = Boolean(user)
+      const { count } = getFreeSessionState()
+      const deviceJoin = await syncDeviceJoin(user)
+      const trackedJoinCount = Math.max(count, deviceJoin.joinCount)
+
+      setFreeSessionsUsed(trackedJoinCount)
+      if (!isSignedIn && trackedJoinCount >= FREE_SESSION_LIMIT) {
+        setFreeLimitReached(true)
+        return
+      }
+
+      if (deviceJoin.isBanned) {
+        router.replace("/banned")
+        return
+      }
+
       // Step 1: Find or create a room
       const roomResponse = await fetch(`/api/rooms?emotion=${emotion}`)
       const roomData = await roomResponse.json()
@@ -88,12 +244,20 @@ export function useSession(emotion: string) {
       }
 
       setSession(sessionData.session)
+      const nextTrackedCount = await incrementDeviceJoinCount(user)
+      if (!isSignedIn) {
+        const nextCount = countFreeSessionForRoom(roomData.room.id)
+        const displayCount = Math.max(nextCount, nextTrackedCount || 0)
+        setFreeSessionsUsed(displayCount)
+      } else if (nextTrackedCount) {
+        setFreeSessionsUsed(nextTrackedCount)
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : "An error occurred")
     } finally {
       setIsLoading(false)
     }
-  }, [emotion, anonymousId])
+  }, [emotion, anonymousId, getFreeSessionState, syncDeviceJoin, router, incrementDeviceJoinCount, countFreeSessionForRoom])
 
   // Leave the room and end the session
   const leaveRoom = useCallback(async (durationSeconds: number) => {
@@ -122,7 +286,7 @@ export function useSession(emotion: string) {
   }, [room, session])
 
   // Send a reaction
-  const sendReaction = useCallback(async (reactionType: "heart" | "wave" | "peace") => {
+  const sendReaction = useCallback(async (reactionType: "with-you" | "holding" | "thank-you" | "take-time" | "not-alone") => {
     if (!room || !session) return
 
     try {
@@ -177,9 +341,13 @@ export function useSession(emotion: string) {
     isLoading,
     error,
     anonymousId,
+    freeLimitReached,
+    freeSessionsUsed,
+    freeSessionLimit: FREE_SESSION_LIMIT,
     joinRoom,
     leaveRoom,
     sendReaction,
     saveReflection,
+    signInWithGoogle,
   }
 }

@@ -149,22 +149,32 @@
 // }
 "use client"
 
-import { useState, useEffect, useMemo } from "react"
+import { useState, useEffect } from "react"
 
 interface RealtimeReaction {
   id: string
   userId: string
   username?: string
   emoji?: string
-  type: "heart" | "wave" | "peace"
+  type: ReactionId
   timestamp: number
 }
 
 interface SilentReactionsSimpleProps {
-  onSendReaction: (type: "heart" | "wave" | "peace") => Promise<void>
+  onSendReaction: (type: ReactionId) => Promise<void>
   realtimeReactions?: RealtimeReaction[]
   myUserId?: string
 }
+
+type ReactionId = "with-you" | "holding" | "thank-you" | "take-time" | "not-alone"
+
+const REACTIONS = [
+  { id: "with-you", emoji: "🫂", label: "I'm with you", bg: "bg-rose-500/15 border-rose-500/30 hover:bg-rose-500/25 hover:border-rose-500/50" },
+  { id: "holding", emoji: "🕯️", label: "Holding space", bg: "bg-amber-500/15 border-amber-500/30 hover:bg-amber-500/25 hover:border-amber-500/50" },
+  { id: "thank-you", emoji: "💙", label: "Thank you for sharing", bg: "bg-blue-500/15 border-blue-500/30 hover:bg-blue-500/25 hover:border-blue-500/50" },
+  { id: "take-time", emoji: "🌊", label: "Take your time", bg: "bg-cyan-500/15 border-cyan-500/30 hover:bg-cyan-500/25 hover:border-cyan-500/50" },
+  { id: "not-alone", emoji: "🤍", label: "You're not alone", bg: "bg-violet-500/15 border-violet-500/30 hover:bg-violet-500/25 hover:border-violet-500/50" },
+] satisfies Array<{ id: ReactionId; emoji: string; label: string; bg: string }>
 
 // Safe positions that avoid UI elements (timer at top, controls at bottom center, reaction buttons at bottom left)
 const FLOAT_POSITIONS = [
@@ -181,7 +191,7 @@ const FLOAT_POSITIONS = [
 export function SilentReactionsSimple({ onSendReaction, realtimeReactions = [], myUserId }: SilentReactionsSimpleProps) {
   const [localReactions, setLocalReactions] = useState<Array<{ 
     id: string
-    type: string
+    type: ReactionId
     isRemote: boolean
     username?: string
     userEmoji?: string
@@ -189,6 +199,8 @@ export function SilentReactionsSimple({ onSendReaction, realtimeReactions = [], 
   }>>([])
   
   const [positionIndex, setPositionIndex] = useState(0)
+  const [showReactions, setShowReactions] = useState(false)
+  const [showSent, setShowSent] = useState(false)
 
   // Get next position cycling through available positions
   const getNextPosition = () => {
@@ -225,7 +237,7 @@ export function SilentReactionsSimple({ onSendReaction, realtimeReactions = [], 
     }
   }, [realtimeReactions, myUserId])
 
-  const handleReaction = (type: "heart" | "wave" | "peace") => {
+  const handleReaction = (type: ReactionId) => {
     const newReaction = {
       id: `local-${Date.now()}`,
       type,
@@ -238,19 +250,18 @@ export function SilentReactionsSimple({ onSendReaction, realtimeReactions = [], 
     }, 4000)
 
     onSendReaction(type)
+    setShowReactions(false)
+    setShowSent(true)
+    setTimeout(() => {
+      setShowSent(false)
+    }, 1500)
   }
-
-  const reactionButtons = [
-    { type: "heart" as const, emoji: "\uD83E\uDEC2", label: "Support", bg: "bg-rose-500/15 border-rose-500/30 hover:bg-rose-500/25 hover:border-rose-500/50" },
-    { type: "wave" as const, emoji: "\uD83D\uDC4B", label: "Here for you", bg: "bg-amber-500/15 border-amber-500/30 hover:bg-amber-500/25 hover:border-amber-500/50" },
-    { type: "peace" as const, emoji: "\uD83D\uDE4F", label: "Grateful", bg: "bg-emerald-500/15 border-emerald-500/30 hover:bg-emerald-500/25 hover:border-emerald-500/50" },
-  ]
 
   return (
     <>
       {/* Floating Reactions - Scattered around the screen */}
       {localReactions.map((reaction) => {
-        const btn = reactionButtons.find((b) => b.type === reaction.type)
+        const btn = REACTIONS.find((b) => b.id === reaction.type)
         return (
           <div
             key={reaction.id}
@@ -278,13 +289,47 @@ export function SilentReactionsSimple({ onSendReaction, realtimeReactions = [], 
         )
       })}
 
-      {/* Reaction Buttons - Compact floating pills at bottom left */}
-      <div className="fixed bottom-6 left-4 md:left-6 z-40">
+      {/* Mobile reaction trigger */}
+      <button
+        onClick={() => setShowReactions((open) => !open)}
+        className="fixed bottom-24 right-4 z-40 flex items-center gap-2 rounded-full border border-border bg-background/90 px-4 py-2.5 text-sm font-medium text-foreground shadow-sm backdrop-blur-sm transition-all active:scale-95 md:hidden"
+        aria-expanded={showReactions}
+        aria-label="Open reactions"
+      >
+        <span>{showSent ? "sent ✓" : "🫂 React"}</span>
+      </button>
+
+      {showReactions && (
+        <div className="md:hidden">
+          <button
+            type="button"
+            className="fixed inset-0 z-30 bg-black/20"
+            onClick={() => setShowReactions(false)}
+            aria-label="Close reactions"
+          />
+          <div className="fixed bottom-36 right-4 z-40 grid w-72 grid-cols-2 gap-2 rounded-2xl border border-border bg-background/95 p-3 shadow-lg backdrop-blur-sm">
+            {REACTIONS.map((btn) => (
+              <button
+                key={btn.id}
+                onClick={() => handleReaction(btn.id)}
+                className="flex min-h-14 items-center gap-2 rounded-xl px-3 py-2.5 text-left text-xs leading-tight text-foreground transition-colors hover:bg-secondary"
+                aria-label={btn.label}
+              >
+                <span className="text-lg">{btn.emoji}</span>
+                <span>{btn.label}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Desktop reaction buttons - Compact floating pills at bottom left */}
+      <div className="fixed bottom-6 left-4 z-40 hidden md:left-6 md:flex">
         <div className="flex flex-col gap-2">
-          {reactionButtons.map((btn) => (
+          {REACTIONS.map((btn) => (
             <button
-              key={btn.type}
-              onClick={() => handleReaction(btn.type)}
+              key={btn.id}
+              onClick={() => handleReaction(btn.id)}
               className={`
                 group flex items-center gap-2.5 pl-3 pr-4 py-2.5 rounded-full border backdrop-blur-md
                 transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg ${btn.bg}

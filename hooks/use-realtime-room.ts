@@ -194,12 +194,14 @@ interface Participant {
   joinedAt: Date
 }
 
+type ReactionId = "with-you" | "holding" | "thank-you" | "take-time" | "not-alone"
+
 interface RealtimeReaction {
   id: string
   userId: string
   username?: string
   emoji?: string
-  type: "heart" | "wave" | "peace"
+  type: ReactionId
   timestamp: number
 }
 
@@ -338,7 +340,7 @@ export function useRealtimeRoom(roomId: string | null, userId: string | null) {
   }, [roomId, userId])
 
   const broadcastReaction = useCallback(
-    async (type: "heart" | "wave" | "peace") => {
+    async (type: ReactionId) => {
       if (!channelRef.current || !isConnected || !userId || !myAvatar) return
 
       const reaction: RealtimeReaction = {

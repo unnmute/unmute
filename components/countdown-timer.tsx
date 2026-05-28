@@ -10,6 +10,7 @@ interface CountdownTimerProps {
   isResumed?: boolean
   isCompleted?: boolean
   isLastTwoMinutes?: boolean
+  showArrival?: boolean
 }
 
 const emotionColors: Record<string, string> = {
@@ -27,6 +28,7 @@ export function CountdownTimer({
   isResumed = false,
   isCompleted = false,
   isLastTwoMinutes = false,
+  showArrival = false,
 }: CountdownTimerProps) {
   const minutes = Math.floor(timeRemaining / 60)
   const seconds = timeRemaining % 60
@@ -134,7 +136,7 @@ export function CountdownTimer({
       </AnimatePresence>
 
       {/* Background Circle */}
-      <svg className="absolute inset-0 w-full h-full -rotate-90">
+      <svg className={`absolute inset-0 w-full h-full -rotate-90 ${showArrival ? "timer-arrival-pulse" : ""}`}>
         <circle
           cx="128"
           cy="128"
@@ -197,6 +199,22 @@ export function CountdownTimer({
         }`}>
           {isLastTwoMinutes ? "almost there..." : "remaining"}
         </p>
+        <AnimatePresence>
+          {showArrival && (
+            <motion.p
+              initial="hidden"
+              animate="visible"
+              exit="hidden"
+              variants={{
+                hidden: { opacity: 0, transition: { duration: 1 } },
+                visible: { opacity: 1, transition: { duration: 0.5 } },
+              }}
+              className="absolute left-1/2 top-full mt-2 -translate-x-1/2 whitespace-nowrap text-[10px] text-muted-foreground/30"
+            >
+              another soul arrived
+            </motion.p>
+          )}
+        </AnimatePresence>
       </div>
 
       {/* Ambient Dots */}
@@ -225,6 +243,17 @@ export function CountdownTimer({
           }}
         />
       ))}
+
+      <style jsx>{`
+        @keyframes timer-arrival-pulse {
+          0%, 100% { filter: drop-shadow(0 0 0 transparent); }
+          20% { filter: drop-shadow(0 0 18px ${color}55); }
+          55% { filter: drop-shadow(0 0 28px ${color}33); }
+        }
+        .timer-arrival-pulse {
+          animation: timer-arrival-pulse 1.2s ease-in-out;
+        }
+      `}</style>
     </div>
   )
 }
