@@ -9,6 +9,7 @@ import './globals.css'
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://unmuteai.co.in"),
   title: 'UNMUTE — Talk Anonymously. Feel Lighter. Free Emotional Support',
   description: 'UNMUTE is a free, anonymous mental wellness space where you can talk openly without judgment. Join live audio sanctuaries with people who feel the same as you.',
   generator: 'v0.app',
