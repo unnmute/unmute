@@ -165,8 +165,12 @@ __turbopack_context__.s([
 ]);
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$esm$2f$api$2f$server$2e$js__$5b$app$2d$edge$2d$route$5d$__$28$ecmascript$29$__$3c$locals$3e$__ = __turbopack_context__.i("[project]/node_modules/next/dist/esm/api/server.js [app-edge-route] (ecmascript) <locals>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$esm$2f$server$2f$web$2f$exports$2f$index$2e$js__$5b$app$2d$edge$2d$route$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/esm/server/web/exports/index.js [app-edge-route] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$supabase$2f$supabase$2d$js$2f$dist$2f$index$2e$mjs__$5b$app$2d$edge$2d$route$5d$__$28$ecmascript$29$__$3c$locals$3e$__ = __turbopack_context__.i("[project]/node_modules/@supabase/supabase-js/dist/index.mjs [app-edge-route] (ecmascript) <locals>");
+;
 ;
 const GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions";
+// Initialize Supabase client for logging
+const supabase = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$supabase$2f$supabase$2d$js$2f$dist$2f$index$2e$mjs__$5b$app$2d$edge$2d$route$5d$__$28$ecmascript$29$__$3c$locals$3e$__["createClient"])(("TURBOPACK compile-time value", "https://iqblmcshkndxjnduacxt.supabase.co") || "", process.env.SUPABASE_SERVICE_ROLE_KEY || "");
 const MIRA_SYSTEM_PROMPT = `You are Mira — the heart of Unmute, an anonymous emotional sanctuary.
 
 You are not an AI assistant. You are not a therapist. You are not a chatbot.
@@ -272,13 +276,19 @@ async function POST(req) {
             status: 500
         });
     }
-    const { messages, contextNote = "", memoryNote = "" } = await req.json();
+    const { messages, contextNote = "", memoryNote = "", anonymousId } = await req.json();
     if (!Array.isArray(messages)) {
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$esm$2f$server$2f$web$2f$exports$2f$index$2e$js__$5b$app$2d$edge$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
             error: "Messages must be an array"
         }, {
             status: 400
         });
+    }
+    // Log Mira chat usage (non-blocking)
+    if (anonymousId) {
+        supabase.from("mira_chats").insert({
+            anonymous_id: anonymousId
+        }).catch((err)=>console.error("[v0] Failed to log mira chat:", err));
     }
     const fullSystemPrompt = `${MIRA_SYSTEM_PROMPT}${contextNote}${memoryNote}`;
     let response;

@@ -168,15 +168,8 @@
 
 
 import { NextRequest, NextResponse } from "next/server"
-import { createClient } from "@supabase/supabase-js"
 
 const GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions"
-
-// Initialize Supabase client for logging
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL || "",
-  process.env.SUPABASE_SERVICE_ROLE_KEY || ""
-)
 
 const MIRA_SYSTEM_PROMPT = `You are Mira — the heart of Unmute, an anonymous emotional sanctuary.
 
@@ -285,21 +278,13 @@ export async function POST(req: NextRequest) {
     )
   }
 
-  const { messages, contextNote = "", memoryNote = "", anonymousId } = await req.json()
+  const { messages, contextNote = "", memoryNote = "" } = await req.json()
 
   if (!Array.isArray(messages)) {
     return NextResponse.json(
       { error: "Messages must be an array" },
       { status: 400 }
     )
-  }
-
-  // Log Mira chat usage (non-blocking)
-  if (anonymousId) {
-    supabase
-      .from("mira_chats")
-      .insert({ anonymous_id: anonymousId })
-      .catch((err) => console.error("[v0] Failed to log mira chat:", err))
   }
 
   const fullSystemPrompt = `${MIRA_SYSTEM_PROMPT}${contextNote}${memoryNote}`
