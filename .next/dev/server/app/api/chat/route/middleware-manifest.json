@@ -16,11 +16,8 @@
         "server/edge/chunks/node_modules_next_dist_compiled_1fe0aaac._.js",
         "server/edge/chunks/node_modules_next_dist_7bea040f._.js",
         "server/edge/chunks/edge-wrapper_d7ce9b1c.js",
-        "server/edge/chunks/node_modules_@supabase_postgrest-js_dist_index_mjs_43d40c90._.js",
-        "server/edge/chunks/node_modules_@supabase_auth-js_dist_module_1590e343._.js",
-        "server/edge/chunks/node_modules_73ca9ee0._.js",
         "server/edge/chunks/[root-of-the-server]__9db4bc9a._.js",
-        "server/edge/chunks/turbopack-edge-wrapper_47b64bb5.js"
+        "server/edge/chunks/turbopack-edge-wrapper_590272dd.js"
       ],
       "name": "app/api/chat/route",
       "page": "/api/chat/route",
@@ -34,10 +31,10 @@
       "assets": [],
       "env": {
         "__NEXT_BUILD_ID": "development",
-        "NEXT_SERVER_ACTIONS_ENCRYPTION_KEY": "csZkZwkpf1gbB3iuTlPYpfZu4HObGA8IvahtxA9I9bI=",
-        "__NEXT_PREVIEW_MODE_ID": "1c42c932ac14242950e8bc77aac0fd00",
-        "__NEXT_PREVIEW_MODE_ENCRYPTION_KEY": "64b9b65485fbe2ede3bbd5ee2a2161ffc836c315f6b5b7c91205121ecc5349bc",
-        "__NEXT_PREVIEW_MODE_SIGNING_KEY": "59a5f62f1fd84a28cefd9f8b92f3f4d4942d23052be507de0510d660d30c0bd1"
+        "NEXT_SERVER_ACTIONS_ENCRYPTION_KEY": "uyUy37PkieuNjkID8BfO3KkHHwgD+EjLCjD3lcPZmjM=",
+        "__NEXT_PREVIEW_MODE_ID": "17df1a50b30bc59db87712128a930086",
+        "__NEXT_PREVIEW_MODE_ENCRYPTION_KEY": "74bc2eb70d84433fd670b71cd0d0e85a14e3b806e1d94b8b1225026e5893daed",
+        "__NEXT_PREVIEW_MODE_SIGNING_KEY": "6738085b6aeee06e9f49ae2171fda9deca5a08b0b26ddc7aab43677c59fc6f84"
       }
     }
   }

@@ -560,6 +560,7 @@
 import { ArrowLeft, ArrowUp } from "lucide-react"
 import { FormEvent, KeyboardEvent, useEffect, useRef, useState } from "react"
 import Link from "next/link"
+import { logMiraChat } from "@/lib/actions/mira"
 
 type ChatMessage = {
   role: "user" | "assistant"
@@ -824,6 +825,7 @@ export function BotChat() {
   const [isSendLocked, setIsSendLocked] = useState(false)
   const [miraMemo, setMiraMemo] = useState<MiraMemo>(INITIAL_MEMO)
   const [crisisStage, setCrisisStage] = useState<CrisisStage>("idle")
+  const [anonymousId] = useState(() => Math.random().toString(36).substring(2, 11))
   const scrollRef = useRef<HTMLDivElement>(null)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
   const cooldownRef = useRef<number | null>(null)
@@ -969,6 +971,11 @@ export function BotChat() {
       const reply = typeof data.reply === "string" ? data.reply : "I'm here. Say that one more time?"
 
       setMessages((current) => [...current, { role: "assistant", content: reply }])
+      
+      // Log chat usage (fire-and-forget, non-blocking)
+      logMiraChat(anonymousId).catch(() => {
+        // Silent catch - logging failures should not affect user experience
+      })
     } catch {
       setMessages((current) => [
         ...current,
