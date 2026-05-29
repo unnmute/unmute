@@ -99,9 +99,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { emotion } = await params
   const meta = emotionMeta[emotion] || emotionMeta.anxious
-  const baseUrl = process.env.VERCEL_URL
-    ? `https://${process.env.VERCEL_URL}`
-    : process.env.NEXT_PUBLIC_SITE_URL || "https://unmute.app"
+  const baseUrl = "https://unmuteai.co.in"
   const canonicalUrl = `${baseUrl}/room/${roomSlugMap[emotion] || emotion}`
   
   return {
@@ -138,9 +136,7 @@ export default async function RoomPage({
 }) {
   const { emotion } = await params
   const meta = emotionMeta[emotion] || emotionMeta.anxious
-  const baseUrl = process.env.VERCEL_URL
-    ? `https://${process.env.VERCEL_URL}`
-    : process.env.NEXT_PUBLIC_SITE_URL || "https://unmute.app"
+  const baseUrl = "https://unmuteai.co.in"
   const canonicalUrl = `${baseUrl}/room/${roomSlugMap[emotion] || emotion}`
 
   // JSON-LD Schema
