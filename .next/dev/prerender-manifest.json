@@ -1,11 +1,1 @@
-{
-  "version": 4,
-  "routes": {},
-  "dynamicRoutes": {},
-  "notFoundRoutes": [],
-  "preview": {
-    "previewModeId": "3b95e76db0e86991d36f543b57f465eb",
-    "previewModeSigningKey": "5423636075c4abcf207c98e281cf977f7288a02986c9f2b36b22c0c2e1dbf638",
-    "previewModeEncryptionKey": "e0ef88ca57ffdcad33178cca19139c5e865f255574d0fbd205fd6c7adb02126d"
-  }
-}
+{"version":4,"routes":{"/room/anxious":{},"/room/lonely":{},"/room/burnt-out":{},"/room/just-talk":{}},"dynamicRoutes":{"/room/[emotion]":{"dataRoute":null,"dataRouteRegex":null,"fallback":null,"fallbackRevalidate":false,"fallbackSourceRoute":"/room/[emotion]","routeRegex":"^\\/room\\/([^/]+?)(?:\\/)?$","allowHeader":[]}},"notFoundRoutes":[],"preview":{"previewModeId":"4b1aec8ac8a388b58f0edc12fc3d740c","previewModeSigningKey":"812bceb650fb4f34e8a07b70ef18a39faa8d616f4b42d82c665308b225e4930c","previewModeEncryptionKey":"ea4d8cc96e07be70bc4225b2196d64c62c5d6dd097a26b4977ecb352062bb68d"}}
