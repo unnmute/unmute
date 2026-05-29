@@ -168,40 +168,35 @@ export default async function RoomPage({
       {/* Canonical Tag */}
       <link rel="canonical" href={canonicalUrl} />
 
-      {/* Static HTML Shell - visible before client component loads */}
-      <div suppressHydrationWarning className="min-h-screen bg-background text-foreground">
-        <header className="bg-background/95 backdrop-blur-md border-b border-border py-4">
-          <div className="container mx-auto px-4">
-            <h1 className="text-2xl font-semibold">{meta.roomName}</h1>
-            <p className="text-muted-foreground mt-2">{meta.roomDescription}</p>
-          </div>
+      {/* Static HTML Shell - hidden from users but present in HTML for SEO crawling */}
+      <div suppressHydrationWarning className="hidden">
+        <header>
+          <h1>{meta.roomName}</h1>
+          <p>{meta.roomDescription}</p>
         </header>
 
-        <main className="container mx-auto px-4 py-8">
-          <section className="mb-12">
-            <h2 className="text-xl font-semibold mb-4">Sanctuary Rules</h2>
-            <ul className="space-y-2">
+        <main>
+          <section>
+            <h2>Sanctuary Rules</h2>
+            <ul>
               {meta.sanctuaryRules.map((rule, idx) => (
-                <li key={idx} className="flex items-start gap-3">
-                  <span className="text-muted-foreground mt-1">•</span>
-                  <span>{rule}</span>
-                </li>
+                <li key={idx}>{rule}</li>
               ))}
             </ul>
           </section>
 
-          <section className="mb-12">
-            <h2 className="text-xl font-semibold mb-4">About This Space</h2>
-            <p className="text-muted-foreground leading-relaxed">
+          <section>
+            <h2>About This Space</h2>
+            <p>
               {meta.roomDescription} All conversations are completely anonymous and confidential. 
               Join compassionate listeners and be heard in a judgment-free environment.
             </p>
           </section>
         </main>
-
-        {/* Client component will render here and take over */}
-        <RoomClient emotion={emotion} />
       </div>
+
+      {/* Client component renders the actual interactive UI */}
+      <RoomClient emotion={emotion} />
     </>
   )
 }
