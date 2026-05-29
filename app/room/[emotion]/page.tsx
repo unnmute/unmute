@@ -2,8 +2,8 @@
 import { RoomClient } from "./room-client"
 import type { Metadata } from "next"
 
-export const runtime = "edge"
-export const dynamic = "force-dynamic"
+// Allow static generation with generateStaticParams
+export const revalidate = 3600 // ISR: revalidate every hour
 
 const roomSlugMap: Record<string, string> = {
   anxious: "anxious",
