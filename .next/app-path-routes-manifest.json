@@ -19,6 +19,8 @@
   "/listen/page": "/listen",
   "/page": "/",
   "/reflection/page": "/reflection",
+  "/robots.txt/route": "/robots.txt",
   "/room/[emotion]/page": "/room/[emotion]",
+  "/sitemap.xml/route": "/sitemap.xml",
   "/unsent/page": "/unsent"
 }

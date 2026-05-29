@@ -329,6 +329,27 @@ export default function HomePage() {
       {/* Footer */}
       <footer className="sticky bottom-0 z-40 hidden border-t border-border bg-background/95 backdrop-blur-md sm:block" role="contentinfo">
         <div className="container mx-auto px-4 py-3">
+          {/* Sitemap Links - for SEO crawlability */}
+          <nav className="mb-3 pb-2 border-b border-border/50" aria-label="Site navigation">
+            <div className="flex flex-wrap gap-3 text-xs">
+              <a href="/" className="text-muted-foreground hover:text-foreground transition-colors">Home</a>
+              <span className="text-border/30">•</span>
+              <a href="/room/anxious" className="text-muted-foreground hover:text-foreground transition-colors">Anxiety Sanctuary</a>
+              <span className="text-border/30">•</span>
+              <a href="/room/lonely" className="text-muted-foreground hover:text-foreground transition-colors">Loneliness Sanctuary</a>
+              <span className="text-border/30">•</span>
+              <a href="/room/burnt-out" className="text-muted-foreground hover:text-foreground transition-colors">Burnout Sanctuary</a>
+              <span className="text-border/30">•</span>
+              <a href="/room/just-talk" className="text-muted-foreground hover:text-foreground transition-colors">Connection Sanctuary</a>
+              <span className="text-border/30">•</span>
+              <a href="/echoes" className="text-muted-foreground hover:text-foreground transition-colors">Echoes</a>
+              <span className="text-border/30">•</span>
+              <a href="/unsent" className="text-muted-foreground hover:text-foreground transition-colors">The Unsent Room</a>
+              <span className="text-border/30">•</span>
+              <a href="/listen" className="text-muted-foreground hover:text-foreground transition-colors">Meet Mira</a>
+            </div>
+          </nav>
+
           {/* Disclaimers */}
           <div className="flex flex-col sm:flex-row items-center justify-between gap-2 mb-2">
             <p className="text-xs text-muted-foreground">

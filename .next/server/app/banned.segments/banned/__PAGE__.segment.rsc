@@ -1,5 +1,0 @@
-1:"$Sreact.fragment"
-2:I[97367,["/_next/static/chunks/ff1a16fafef87110.js","/_next/static/chunks/247eb132b7f7b574.js"],"OutletBoundary"]
-3:"$Sreact.suspense"
-0:{"buildId":"LeoQLKjZq-AazUwpGWUFC","rsc":["$","$1","c",{"children":[["$","main",null,{"className":"min-h-screen bg-background flex flex-col items-center justify-center text-center px-6","children":[["$","div",null,{"className":"text-4xl mb-6","children":"🚫"}],["$","h1",null,{"className":"text-xl font-light mb-3","children":"You've been removed from Unmute"}],["$","p",null,{"className":"text-sm text-muted-foreground max-w-xs leading-relaxed","children":"Your account was automatically flagged after multiple community reports. This decision exists to protect the people in this space."}],["$","p",null,{"className":"text-xs text-muted-foreground/50 mt-8","children":"If you believe this is a mistake, contact unnmute@gmail.com"}]]}],null,["$","$L2",null,{"children":["$","$3",null,{"name":"Next.MetadataOutlet","children":"$@4"}]}]]}],"loading":null,"isPartial":false}
-4:null

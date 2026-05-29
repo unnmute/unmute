@@ -99,7 +99,7 @@
         "transform": "lodash/{{member}}"
       }
     },
-    "outputFileTracingRoot": "/Users/ajaykhare/Desktop/unmute-main",
+    "outputFileTracingRoot": "/vercel/share/v0-project",
     "cacheComponents": false,
     "cacheLife": {
       "default": {
@@ -157,7 +157,7 @@
       "proxyPrefetch": "flexible",
       "optimisticClientCache": true,
       "manualClientBasePath": false,
-      "cpus": 9,
+      "cpus": 3,
       "memoryBasedWorkersCount": false,
       "imgOptConcurrency": null,
       "imgOptTimeoutInSeconds": 7,
@@ -289,11 +289,11 @@
     "bundlePagesRouterDependencies": false,
     "configFileName": "next.config.mjs",
     "turbopack": {
-      "root": "/Users/ajaykhare/Desktop/unmute-main"
+      "root": "/vercel/share/v0-project"
     },
     "distDirRoot": ".next"
   },
-  "appDir": "/Users/ajaykhare/Desktop/unmute-main",
+  "appDir": "/vercel/share/v0-project",
   "relativeAppDir": "",
   "files": [
     ".next/routes-manifest.json",
