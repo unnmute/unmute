@@ -1525,6 +1525,12 @@
     gap: 3px;
   }
 
+  :where(.space-y-2 > :not(:last-child)) {
+    --tw-space-y-reverse: 0;
+    margin-block-start: calc(calc(var(--spacing) * 2) * var(--tw-space-y-reverse));
+    margin-block-end: calc(calc(var(--spacing) * 2) * calc(1 - var(--tw-space-y-reverse)));
+  }
+
   :where(.space-y-4 > :not(:last-child)) {
     --tw-space-y-reverse: 0;
     margin-block-start: calc(calc(var(--spacing) * 4) * var(--tw-space-y-reverse));
@@ -1537,10 +1543,18 @@
     margin-block-end: calc(calc(var(--spacing) * 5) * calc(1 - var(--tw-space-y-reverse)));
   }
 
+  .gap-x-4 {
+    column-gap: calc(var(--spacing) * 4);
+  }
+
   :where(.-space-x-3 > :not(:last-child)) {
     --tw-space-x-reverse: 0;
     margin-inline-start: calc(calc(var(--spacing) * -3) * var(--tw-space-x-reverse));
     margin-inline-end: calc(calc(var(--spacing) * -3) * calc(1 - var(--tw-space-x-reverse)));
+  }
+
+  .gap-y-1 {
+    row-gap: calc(var(--spacing) * 1);
   }
 
   .truncate {
@@ -3120,6 +3134,16 @@
     color: var(--border);
   }
 
+  .text-border\/30 {
+    color: var(--border);
+  }
+
+  @supports (color: color-mix(in lab, red, red)) {
+    .text-border\/30 {
+      color: color-mix(in oklab, var(--border) 30%, transparent);
+    }
+  }
+
   .text-destructive {
     color: var(--destructive);
   }
@@ -3340,6 +3364,10 @@
 
   .underline {
     text-decoration-line: underline;
+  }
+
+  .underline-offset-1 {
+    text-underline-offset: 1px;
   }
 
   .underline-offset-2 {

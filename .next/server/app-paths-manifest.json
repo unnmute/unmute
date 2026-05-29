@@ -19,6 +19,8 @@
   "/listen/page": "app/listen/page.js",
   "/page": "app/page.js",
   "/reflection/page": "app/reflection/page.js",
-  "/room/[emotion]/page": "app-edge-has-no-entrypoint",
+  "/robots.txt/route": "app/robots.txt/route.js",
+  "/room/[emotion]/page": "app/room/[emotion]/page.js",
+  "/sitemap.xml/route": "app/sitemap.xml/route.js",
   "/unsent/page": "app/unsent/page.js"
 }
