@@ -824,7 +824,6 @@ export function BotChat() {
   const [isSendLocked, setIsSendLocked] = useState(false)
   const [miraMemo, setMiraMemo] = useState<MiraMemo>(INITIAL_MEMO)
   const [crisisStage, setCrisisStage] = useState<CrisisStage>("idle")
-  const [anonymousId] = useState(() => Math.random().toString(36).substring(2, 11))
   const scrollRef = useRef<HTMLDivElement>(null)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
   const cooldownRef = useRef<number | null>(null)
@@ -959,7 +958,6 @@ export function BotChat() {
           messages: nextMessages,
           contextNote: `${buildContextNote(analysis)}${buildPhraseLimitNote(nextMessages)}`,
           memoryNote: buildMemoryNote(nextMemo),
-          anonymousId,
         }),
       })
 
