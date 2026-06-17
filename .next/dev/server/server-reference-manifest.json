@@ -1,5 +1,21 @@
 {
-  "node": {},
+  "node": {
+    "40742e79d158493fdedaa1ca2e43d77344e5820f0c": {
+      "workers": {
+        "app/listen/page": {
+          "moduleId": "[project]/.next-internal/server/app/listen/page/actions.js { ACTIONS_MODULE0 => \"[project]/lib/actions/mira.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "logMiraChat",
+          "filename": "lib/actions/mira.ts"
+        }
+      },
+      "layer": {
+        "app/listen/page": "action-browser"
+      },
+      "filename": "lib/actions/mira.ts",
+      "exportedName": "logMiraChat"
+    }
+  },
   "edge": {},
-  "encryptionKey": "D86BkUJYZFyLKzEpiiYjjbZ+pgMt+16Zmpk3M/dAJ8s="
+  "encryptionKey": "4Y703oC8ibrtjJI0GCfyQQpPdbwoFIRAIiXnqVawde4="
 }

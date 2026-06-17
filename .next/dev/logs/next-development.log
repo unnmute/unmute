@@ -1,1 +1,13 @@
-[00:00:01.042] Server  LOG      ✓ Ready in 654ms
+[00:00:00.756] Server  LOG      ✓ Ready in 495ms
+[00:00:14.529] Server  LOG      ○ Compiling / ...
+[00:00:18.587] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:00:18.587] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[00:00:18.587] Browser LOG     %c[Vercel Web Analytics]%c [view] https://vm-add-environment-variables.vusercontent.net/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"https://vm-add-environment-variables.vusercontent.net/","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1781695798250} /_vercel/insights/view
+[00:00:34.777] Browser LOG     %c[Vercel Web Analytics]%c [view] https://vm-add-environment-variables.vusercontent.net/listen color: rgb(120, 120, 120) color: inherit {"dp":"/listen","o":"https://vm-add-environment-variables.vusercontent.net/listen","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1781695814887} /_vercel/insights/view
+[00:00:39.350] Server  ERROR   Groq request failed 401 {"error":{"message":"Invalid API Key","type":"invalid_request_error","code":"invalid_api_key"}}
+
+[00:00:40.035] Server  ERROR   Groq request failed 401 {"error":{"message":"Invalid API Key","type":"invalid_request_error","code":"invalid_api_key"}}
+
+[00:01:31.147] Server  LOG        Reload env: .env.development.local
+[00:01:58.425] Server  LOG        Reload env: .env.development.local
+[00:02:26.526] Server  LOG        Reload env: .env.development.local
