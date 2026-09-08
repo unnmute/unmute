@@ -271,7 +271,7 @@ Track these in the conversation and adapt:
 export const runtime = "edge"
 
 export async function POST(req: NextRequest) {
-  const groqApiKey = process.env.GROQ_API_KEY_3 || process.env.GROQ_API_KEY
+  const groqApiKey = process.env.GROQ_API_KEY || process.env.GROQ_API_KEY_3
 
   if (!groqApiKey) {
     return NextResponse.json(
