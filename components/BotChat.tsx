@@ -589,7 +589,7 @@ const OPENING_LINES = [
 
 const LIMIT_MESSAGE =
   "We've been here a while together. I hope something shifted, even a little. Be gentle with yourself today. The Sanctuary rooms are here if you want to talk to someone real."
-const MAX_MESSAGES = 20
+const MAX_MESSAGES = Number.POSITIVE_INFINITY
 const SEND_COOLDOWN_MS = 2000
 const INITIAL_MEMO: MiraMemo = {
   userName: null,

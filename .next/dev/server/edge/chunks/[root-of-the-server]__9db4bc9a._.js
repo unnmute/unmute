@@ -264,10 +264,14 @@ Track these in the conversation and adapt:
 - Always proofread your response before sending.
 - Never send incomplete sentences.`;
 const runtime = "edge";
+// Qwen is the verified conversational model available to this Groq account.
+// Keep one model selected so retries do not change Mira's behavior mid-chat.
+const MIRA_MODEL = "qwen/qwen3.8-27b";
 async function POST(req) {
-    if (!process.env.GROQ_API_KEY) {
+    const groqApiKey = process.env.GROQ_API_KEY || process.env.GROQ_API_KEY_3;
+    if (!groqApiKey) {
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$esm$2f$server$2f$web$2f$exports$2f$index$2e$js__$5b$app$2d$edge$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
-            error: "GROQ_API_KEY is not configured"
+            error: "GROQ_API_KEY_3 is not configured"
         }, {
             status: 500
         });
@@ -282,44 +286,56 @@ async function POST(req) {
     }
     const fullSystemPrompt = `${MIRA_SYSTEM_PROMPT}${contextNote}${memoryNote}`;
     let response;
-    try {
-        response = await fetch(GROQ_API_URL, {
-            method: "POST",
-            headers: {
-                Authorization: `Bearer ${process.env.GROQ_API_KEY}`,
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                model: "llama-3.3-70b-versatile",
-                messages: [
-                    {
-                        role: "system",
-                        content: fullSystemPrompt
-                    },
-                    ...messages
-                ],
-                max_tokens: 180,
-                temperature: 0.82,
-                presence_penalty: 0.6,
-                frequency_penalty: 0.4,
-                stream: false
-            })
-        });
-    } catch (error) {
-        console.error("Groq fetch failed", error);
-        return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$esm$2f$server$2f$web$2f$exports$2f$index$2e$js__$5b$app$2d$edge$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
-            error: "Unable to reach Groq right now"
-        }, {
-            status: 502
-        });
+    let lastError = "";
+    for(let attempt = 0; attempt < 3; attempt += 1){
+        try {
+            response = await fetch(GROQ_API_URL, {
+                method: "POST",
+                headers: {
+                    Authorization: `Bearer ${groqApiKey}`,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    model: MIRA_MODEL,
+                    messages: [
+                        {
+                            role: "system",
+                            content: fullSystemPrompt
+                        },
+                        ...messages
+                    ],
+                    max_tokens: 180,
+                    temperature: 0.82,
+                    presence_penalty: 0.6,
+                    frequency_penalty: 0.4,
+                    stream: false
+                }),
+                signal: AbortSignal.timeout(20000)
+            });
+            if (response.ok) break;
+            lastError = await response.text();
+            if (![
+                408,
+                429,
+                500,
+                502,
+                503,
+                504
+            ].includes(response.status) || attempt === 2) break;
+            const retryAfter = Number(response.headers.get("retry-after"));
+            const delayMs = Number.isFinite(retryAfter) && retryAfter > 0 ? Math.min(retryAfter * 1000, 5000) : 750 * (attempt + 1);
+            await new Promise((resolve)=>setTimeout(resolve, delayMs));
+        } catch (error) {
+            lastError = error instanceof Error ? error.message : "Unknown Groq error";
+            if (attempt < 2) await new Promise((resolve)=>setTimeout(resolve, 750 * (attempt + 1)));
+        }
     }
-    if (!response.ok) {
-        const errorText = await response.text();
-        console.error("Groq request failed", response.status, errorText);
+    if (!response?.ok) {
+        console.error("Groq request failed after model fallback", lastError);
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$esm$2f$server$2f$web$2f$exports$2f$index$2e$js__$5b$app$2d$edge$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
             error: "Unable to generate a reply"
         }, {
-            status: response.status
+            status: 502
         });
     }
     const data = await response.json();
