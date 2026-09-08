@@ -1,1 +1,6 @@
-{}
+{
+  "/api/chat/route": "app-edge-has-no-entrypoint",
+  "/api/echoes/route": "app-edge-has-no-entrypoint",
+  "/listen/page": "app/listen/page.js",
+  "/page": "app/page.js"
+}

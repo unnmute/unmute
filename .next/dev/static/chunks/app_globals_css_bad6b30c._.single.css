@@ -2988,11 +2988,6 @@
     font-size: 15px;
   }
 
-  .leading-5 {
-    --tw-leading: calc(var(--spacing) * 5);
-    line-height: calc(var(--spacing) * 5);
-  }
-
   .leading-6 {
     --tw-leading: calc(var(--spacing) * 6);
     line-height: calc(var(--spacing) * 6);
@@ -3378,10 +3373,6 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
-  .accent-foreground {
-    accent-color: var(--foreground);
-  }
-
   .opacity-0 {
     opacity: 0;
   }
@@ -3697,6 +3688,10 @@
 
   .fade-in {
     --tw-enter-opacity: 0;
+  }
+
+  .running {
+    animation-play-state: running;
   }
 
   .slide-in-from-bottom-2 {
