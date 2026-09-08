@@ -270,9 +270,9 @@ Track these in the conversation and adapt:
 
 export const runtime = "edge"
 
-// Qwen is the primary conversational model available to this Groq account;
-// GPT-OSS is a deterministic fallback for transient model capacity errors.
-const MIRA_MODELS = ["qwen/qwen3.8-27b", "openai/gpt-oss-20b"] as const
+// Qwen is the verified conversational model available to this Groq account.
+// Keep one model selected so retries do not change Mira's behavior mid-chat.
+const MIRA_MODEL = "qwen/qwen3.8-27b"
 
 export async function POST(req: NextRequest) {
   const groqApiKey = process.env.GROQ_API_KEY || process.env.GROQ_API_KEY_3
@@ -298,7 +298,7 @@ export async function POST(req: NextRequest) {
   let response: Response | undefined
   let lastError = ""
 
-  for (const model of MIRA_MODELS) {
+  for (let attempt = 0; attempt < 3; attempt += 1) {
     try {
       response = await fetch(GROQ_API_URL, {
         method: "POST",
@@ -307,7 +307,7 @@ export async function POST(req: NextRequest) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          model,
+          model: MIRA_MODEL,
           messages: [{ role: "system", content: fullSystemPrompt }, ...messages],
           max_tokens: 180,
           temperature: 0.82,
@@ -321,10 +321,16 @@ export async function POST(req: NextRequest) {
       if (response.ok) break
       lastError = await response.text()
 
-      // Retry with the fixed fallback only for capacity/model availability errors.
-      if (![404, 408, 429, 500, 502, 503, 504].includes(response.status)) break
+      if (![408, 429, 500, 502, 503, 504].includes(response.status) || attempt === 2) break
+
+      const retryAfter = Number(response.headers.get("retry-after"))
+      const delayMs = Number.isFinite(retryAfter) && retryAfter > 0
+        ? Math.min(retryAfter * 1000, 5000)
+        : 750 * (attempt + 1)
+      await new Promise((resolve) => setTimeout(resolve, delayMs))
     } catch (error) {
       lastError = error instanceof Error ? error.message : "Unknown Groq error"
+      if (attempt < 2) await new Promise((resolve) => setTimeout(resolve, 750 * (attempt + 1)))
     }
   }
 
