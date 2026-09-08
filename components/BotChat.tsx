@@ -560,7 +560,7 @@
 import { ArrowLeft, ArrowUp } from "lucide-react"
 import { FormEvent, KeyboardEvent, useEffect, useRef, useState } from "react"
 import Link from "next/link"
-import { logMiraChat } from "@/lib/actions/mira"
+import { logMiraTranscript } from "@/lib/actions/mira"
 
 type ChatMessage = {
   role: "user" | "assistant"
@@ -972,9 +972,8 @@ export function BotChat() {
 
       setMessages((current) => [...current, { role: "assistant", content: reply }])
       
-      // Log chat usage (fire-and-forget, non-blocking)
-      logMiraChat(anonymousId).catch(() => {
-        // Silent catch - logging failures should not affect user experience
+      logMiraTranscript(anonymousId, content, reply).catch(() => {
+        // Transcript logging must never interrupt Mira.
       })
     } catch {
       setMessages((current) => [
