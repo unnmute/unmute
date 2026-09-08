@@ -14,3 +14,5 @@
 [00:12:40.698] Browser LOG     %c[Vercel Web Analytics]%c [view] https://add-environment-variables.v0.build/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"https://add-environment-variables.v0.build/","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1788890934774} /_vercel/insights/view
 [00:12:43.131] Browser LOG     %c[Vercel Web Analytics]%c [view] https://add-environment-variables.v0.build/listen color: rgb(120, 120, 120) color: inherit {"dp":"/listen","o":"https://add-environment-variables.v0.build/listen","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1788890937785} /_vercel/insights/view
 [00:15:30.820] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:15:34.368] Server  LOG        Reload env: .env.development.local
+[00:15:34.556] Browser ERROR   Can't perform a React state update on a component that hasn't mounted yet. This indicates that you have a side-effect in your render function that asynchronously tries to update the component. Move this work to useEffect instead.
