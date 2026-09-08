@@ -825,7 +825,6 @@ export function BotChat() {
   const [isSendLocked, setIsSendLocked] = useState(false)
   const [miraMemo, setMiraMemo] = useState<MiraMemo>(INITIAL_MEMO)
   const [crisisStage, setCrisisStage] = useState<CrisisStage>("idle")
-  const [saveTranscript, setSaveTranscript] = useState(false)
   const [anonymousId] = useState(() => Math.random().toString(36).substring(2, 11))
   const scrollRef = useRef<HTMLDivElement>(null)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
@@ -973,11 +972,9 @@ export function BotChat() {
 
       setMessages((current) => [...current, { role: "assistant", content: reply }])
       
-      if (saveTranscript) {
-        logMiraTranscript(anonymousId, content, reply).catch(() => {
-          // Transcript logging must never interrupt Mira.
-        })
-      }
+      logMiraTranscript(anonymousId, content, reply).catch(() => {
+        // Transcript logging must never interrupt Mira.
+      })
     } catch {
       setMessages((current) => [
         ...current,
@@ -1105,17 +1102,6 @@ export function BotChat() {
           onSubmit={handleSubmit}
           className="shrink-0 border-t border-border/70 bg-background/95 pb-5 pt-4"
         >
-          <label className="mb-3 flex items-start gap-2 text-xs leading-5 text-muted-foreground">
-            <input
-              type="checkbox"
-              checked={saveTranscript}
-              onChange={(event) => setSaveTranscript(event.target.checked)}
-              className="mt-1 accent-foreground"
-            />
-            <span>
-              I agree to save this chat anonymously to help improve Mira. I can opt out at any time.
-            </span>
-          </label>
           <div className="flex items-end gap-2 rounded-2xl border border-border bg-card/60 px-3 py-2 focus-within:border-muted-foreground/50">
             <textarea
               ref={textareaRef}
