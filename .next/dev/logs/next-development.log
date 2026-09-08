@@ -1,76 +1,9 @@
-[00:00:00.760] Server  LOG      ✓ Ready in 533ms
-[00:01:45.397] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[00:01:45.397] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
-[00:01:45.397] Browser LOG     %c[Vercel Web Analytics]%c [view] https://add-environment-variables.v0.build/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"https://add-environment-variables.v0.build/","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1788872746933} /_vercel/insights/view
-[00:01:49.255] Browser LOG     %c[Vercel Web Analytics]%c [view] https://add-environment-variables.v0.build/listen color: rgb(120, 120, 120) color: inherit {"dp":"/listen","o":"https://add-environment-variables.v0.build/listen","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1788872751370} /_vercel/insights/view
-[00:01:53.155] Server  ERROR   Groq request failed 401 {"error":{"message":"Invalid API Key","type":"invalid_request_error","code":"invalid_api_key"}}
-
-[00:02:22.179] Server  LOG        Reload env: .env.development.local
-[00:03:46.221] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:03:46.669] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[00:03:46.669] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
-[00:03:46.669] Browser LOG     %c[Vercel Web Analytics]%c [view] https://sb-6i9ztsvim4ed.vercel.run/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"https://sb-6i9ztsvim4ed.vercel.run/","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1788872869716} /_vercel/insights/view
-[00:03:53.656] Server  LOG        Reload env: .env.development.local
-[00:04:06.556] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[00:04:06.556] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
-[00:04:06.556] Browser LOG     %c[Vercel Web Analytics]%c [view] https://add-environment-variables.v0.build/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"https://add-environment-variables.v0.build/","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1788872888205} /_vercel/insights/view
-[00:04:10.301] Browser LOG     %c[Vercel Web Analytics]%c [view] https://add-environment-variables.v0.build/listen color: rgb(120, 120, 120) color: inherit {"dp":"/listen","o":"https://add-environment-variables.v0.build/listen","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1788872892405} /_vercel/insights/view
-[00:04:13.992] Server  ERROR   Groq request failed 404 {"error":{"message":"The model `llama-3.3-70b-versatile` does not exist or you do not have access to it.","type":"invalid_request_error","code":"model_not_found"}}
-
-[00:05:00.048] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[00:05:00.048] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
-[00:05:00.048] Browser LOG     %c[Vercel Web Analytics]%c [view] https://add-environment-variables.v0.build/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"https://add-environment-variables.v0.build/","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1788872941643} /_vercel/insights/view
-[00:05:03.381] Browser LOG     %c[Vercel Web Analytics]%c [view] https://add-environment-variables.v0.build/listen color: rgb(120, 120, 120) color: inherit {"dp":"/listen","o":"https://add-environment-variables.v0.build/listen","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1788872945481} /_vercel/insights/view
-[00:05:07.852] Server  ERROR   Groq request failed 404 {"error":{"message":"The model `llama-3.3-70b-versatile` does not exist or you do not have access to it.","type":"invalid_request_error","code":"model_not_found"}}
-
-[00:06:38.726] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:06:38.924] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[00:06:38.924] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
-[00:06:38.924] Browser LOG     %c[Vercel Web Analytics]%c [view] https://sb-6i9ztsvim4ed.vercel.run/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"https://sb-6i9ztsvim4ed.vercel.run/","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1788873041966} /_vercel/insights/view
-[00:06:42.104] Server  LOG        Reload env: .env.development.local
-[00:07:25.656] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[00:07:25.656] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
-[00:07:25.656] Browser LOG     %c[Vercel Web Analytics]%c [view] https://add-environment-variables.v0.build/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"https://add-environment-variables.v0.build/","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1788873087210} /_vercel/insights/view
-[00:07:29.566] Browser LOG     %c[Vercel Web Analytics]%c [view] https://add-environment-variables.v0.build/listen color: rgb(120, 120, 120) color: inherit {"dp":"/listen","o":"https://add-environment-variables.v0.build/listen","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1788873091657} /_vercel/insights/view
-[00:07:34.388] Server  LOG     [v0] Mira chat logged successfully
-[00:08:03.801] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[00:08:03.801] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/listen","route":"/listen"}
-[00:08:03.801] Browser LOG     %c[Vercel Web Analytics]%c [view] https://add-environment-variables.v0.build/listen color: rgb(120, 120, 120) color: inherit {"dp":"/listen","o":"https://add-environment-variables.v0.build/listen","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1788873124747} /_vercel/insights/view
-[00:08:11.730] Server  LOG     [v0] Mira chat logged successfully
-[00:08:17.644] Server  LOG     [v0] Mira chat logged successfully
-[00:08:33.821] Server  LOG     [v0] Mira chat logged successfully
-[00:11:23.308] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:11:23.825] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[00:11:23.825] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
-[00:11:23.825] Browser LOG     %c[Vercel Web Analytics]%c [view] https://sb-6i9ztsvim4ed.vercel.run/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"https://sb-6i9ztsvim4ed.vercel.run/","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1788873326864} /_vercel/insights/view
-[00:11:25.842] Server  LOG        Reload env: .env.development.local
-[00:11:52.662] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[00:11:52.662] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
-[00:11:52.662] Browser LOG     %c[Vercel Web Analytics]%c [view] https://add-environment-variables.v0.build/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"https://add-environment-variables.v0.build/","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1788873354273} /_vercel/insights/view
-[00:11:55.507] Browser LOG     %c[Vercel Web Analytics]%c [view] https://add-environment-variables.v0.build/listen color: rgb(120, 120, 120) color: inherit {"dp":"/listen","o":"https://add-environment-variables.v0.build/listen","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1788873357580} /_vercel/insights/view
-[00:12:01.325] Server  LOG     [v0] Mira chat logged successfully
-[00:12:05.604] Server  LOG     [v0] Mira chat logged successfully
-[00:12:11.410] Server  LOG     [v0] Mira chat logged successfully
-[00:14:31.715] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:14:33.133] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[00:14:33.133] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
-[00:14:33.133] Browser LOG     %c[Vercel Web Analytics]%c [view] https://sb-6i9ztsvim4ed.vercel.run/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"https://sb-6i9ztsvim4ed.vercel.run/","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1788873516160} /_vercel/insights/view
-[00:14:35.216] Server  LOG        Reload env: .env.development.local
-[00:14:58.125] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[00:14:58.125] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
-[00:14:58.125] Browser LOG     %c[Vercel Web Analytics]%c [view] https://add-environment-variables.v0.build/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"https://add-environment-variables.v0.build/","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1788873539716} /_vercel/insights/view
-[00:15:02.106] Browser LOG     %c[Vercel Web Analytics]%c [view] https://add-environment-variables.v0.build/listen color: rgb(120, 120, 120) color: inherit {"dp":"/listen","o":"https://add-environment-variables.v0.build/listen","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1788873544160} /_vercel/insights/view
-[00:15:09.727] Server  LOG     [v0] Mira chat logged successfully
-[00:15:15.366] Server  LOG     [v0] Mira chat logged successfully
-[00:15:21.213] Server  LOG     [v0] Mira chat logged successfully
-[00:15:25.389] Server  LOG     [v0] Mira chat logged successfully
-[00:15:31.728] Server  LOG     [v0] Mira chat logged successfully
-[00:15:46.930] Server  LOG     [v0] Mira chat logged successfully
-[00:15:55.808] Server  LOG     [v0] Mira chat logged successfully
-[00:16:00.373] Server  LOG     [v0] Mira chat logged successfully
-[00:16:14.375] Server  LOG     [v0] Mira chat logged successfully
-[00:18:41.882] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:18:42.155] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[00:18:42.155] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
-[00:18:42.155] Browser LOG     %c[Vercel Web Analytics]%c [view] https://sb-6i9ztsvim4ed.vercel.run/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"https://sb-6i9ztsvim4ed.vercel.run/","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1788873765166} /_vercel/insights/view
-[00:20:07.042] Server  LOG      ✓ Compiled in 50ms
+[00:00:01.117] Server  LOG      ✓ Ready in 760ms
+[00:00:05.625] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:00:05.625] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/listen","route":"/listen"}
+[00:00:05.625] Browser LOG     %c[Vercel Web Analytics]%c [view] https://add-environment-variables.v0.build/listen color: rgb(120, 120, 120) color: inherit {"dp":"/listen","o":"https://add-environment-variables.v0.build/listen","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1788874251438} /_vercel/insights/view
+[00:01:24.052] Server  LOG        Reload env: .env.development.local
+[00:02:00.165] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:02:00.730] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:02:00.730] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[00:02:00.730] Browser LOG     %c[Vercel Web Analytics]%c [view] https://sb-6i9ztsvim4ed.vercel.run/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"https://sb-6i9ztsvim4ed.vercel.run/","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1788874366948} /_vercel/insights/view
