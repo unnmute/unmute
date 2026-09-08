@@ -2,41 +2,5 @@
   "version": 3,
   "middleware": {},
   "sortedMiddleware": [],
-  "functions": {
-    "/api/echoes/route": {
-      "files": [
-        "server/middleware-build-manifest.js",
-        "server/interception-route-rewrite-manifest.js",
-        "server/server-reference-manifest.js",
-        "server/app/api/echoes/route_client-reference-manifest.js",
-        "server/edge/chunks/_next-internal_server_app_api_echoes_route_actions_49709ecf.js",
-        "server/edge/chunks/node_modules_next_dist_esm_bfee968e._.js",
-        "server/edge/chunks/node_modules_next_dist_compiled_1fe0aaac._.js",
-        "server/edge/chunks/node_modules_next_dist_7bea040f._.js",
-        "server/edge/chunks/edge-wrapper_98436582.js",
-        "server/edge/chunks/node_modules_@supabase_postgrest-js_dist_index_mjs_43d40c90._.js",
-        "server/edge/chunks/node_modules_@supabase_auth-js_dist_module_1590e343._.js",
-        "server/edge/chunks/node_modules_426d5dec._.js",
-        "server/edge/chunks/[root-of-the-server]__2db9724c._.js",
-        "server/edge/chunks/turbopack-edge-wrapper_74a43db3.js"
-      ],
-      "name": "app/api/echoes/route",
-      "page": "/api/echoes/route",
-      "matchers": [
-        {
-          "regexp": "^/api/echoes(?:/)?$",
-          "originalSource": "/api/echoes"
-        }
-      ],
-      "wasm": [],
-      "assets": [],
-      "env": {
-        "__NEXT_BUILD_ID": "development",
-        "NEXT_SERVER_ACTIONS_ENCRYPTION_KEY": "vAgXS0Ad1eFfHTqpIU1byZyRxPSlVHdiNSr3wJP83cI=",
-        "__NEXT_PREVIEW_MODE_ID": "91e438804728eec67674f3faacd3bad5",
-        "__NEXT_PREVIEW_MODE_ENCRYPTION_KEY": "3902fea7e73165d476fe9b0559859e31dc175ac59abae8700c7363fdccbd4436",
-        "__NEXT_PREVIEW_MODE_SIGNING_KEY": "270125e14ddef38127816ce4a93b8ea1b3b0460cb9a99143d1e57aa53b51109b"
-      }
-    }
-  }
+  "functions": {}
 }
