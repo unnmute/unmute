@@ -13,24 +13,20 @@ const supabase = createClient(
  * This is a non-blocking server action that tracks usage
  * @param anonymousId - Unique identifier for the chat session
  */
-export async function logMiraChat(anonymousId: string) {
-  try {
-    if (!anonymousId) {
-      console.error("[v0] logMiraChat: anonymousId is required")
-      return
-    }
+export async function logMiraTranscript(
+  sessionId: string,
+  userMessage: string,
+  assistantMessage: string,
+  model = "qwen/qwen3.8-27b",
+) {
+  if (!sessionId || !userMessage || !assistantMessage) return
 
-    const { error } = await supabase.from("mira_chats").insert({
-      anonymous_id: anonymousId,
-    })
+  const { error } = await supabase.from("mira_chat_transcripts").insert([
+    { session_id: sessionId, user_role: "user", content: userMessage },
+    { session_id: sessionId, user_role: "assistant", content: assistantMessage, model },
+  ])
 
-    if (error) {
-      console.error("[v0] logMiraChat failed:", error.message)
-      return
-    }
-
-    console.log("[v0] Mira chat logged successfully")
-  } catch (err) {
-    console.error("[v0] logMiraChat error:", err)
+  if (error) {
+    console.error("[v0] Mira transcript logging failed:", error.message)
   }
 }

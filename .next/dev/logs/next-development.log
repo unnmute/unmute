@@ -8,3 +8,13 @@
 [00:02:00.730] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
 [00:02:00.730] Browser LOG     %c[Vercel Web Analytics]%c [view] https://sb-6i9ztsvim4ed.vercel.run/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"https://sb-6i9ztsvim4ed.vercel.run/","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1788874366948} /_vercel/insights/view
 [00:03:35.199] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:03:36.359] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:03:36.359] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[00:03:36.359] Browser LOG     %c[Vercel Web Analytics]%c [view] https://sb-6i9ztsvim4ed.vercel.run/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"https://sb-6i9ztsvim4ed.vercel.run/","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1788874462660} /_vercel/insights/view
+[00:04:41.664] Server  LOG      ✓ Compiled in 307ms
+[00:04:53.846] Server  LOG      ✓ Compiled in 159ms
+[00:05:21.323] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:05:21.897] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:05:21.897] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[00:05:21.897] Browser LOG     %c[Vercel Web Analytics]%c [view] https://sb-6i9ztsvim4ed.vercel.run/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"https://sb-6i9ztsvim4ed.vercel.run/","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1788874568208} /_vercel/insights/view
+[00:05:25.088] Server  LOG        Reload env: .env.development.local
