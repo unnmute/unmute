@@ -265,7 +265,7 @@ Track these in the conversation and adapt:
 - Never send incomplete sentences.`;
 const runtime = "edge";
 async function POST(req) {
-    const groqApiKey = process.env.GROQ_API_KEY_3 || process.env.GROQ_API_KEY;
+    const groqApiKey = process.env.GROQ_API_KEY || process.env.GROQ_API_KEY_3;
     if (!groqApiKey) {
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$esm$2f$server$2f$web$2f$exports$2f$index$2e$js__$5b$app$2d$edge$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
             error: "GROQ_API_KEY_3 is not configured"
