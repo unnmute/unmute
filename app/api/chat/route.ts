@@ -271,9 +271,11 @@ Track these in the conversation and adapt:
 export const runtime = "edge"
 
 export async function POST(req: NextRequest) {
-  if (!process.env.GROQ_API_KEY) {
+  const groqApiKey = process.env.GROQ_API_KEY_3 || process.env.GROQ_API_KEY
+
+  if (!groqApiKey) {
     return NextResponse.json(
-      { error: "GROQ_API_KEY is not configured" },
+      { error: "GROQ_API_KEY_3 is not configured" },
       { status: 500 }
     )
   }
@@ -295,7 +297,7 @@ export async function POST(req: NextRequest) {
     response = await fetch(GROQ_API_URL, {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${process.env.GROQ_API_KEY}`,
+        Authorization: `Bearer ${groqApiKey}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
